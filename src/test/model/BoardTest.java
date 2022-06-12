@@ -141,9 +141,9 @@ public class BoardTest {
     @Test
     public void getPieceTest() {
         try {
-            assertEquals(wRook, testBoard.getPiece(0,0));
+            assertEquals(wRook, testBoard.getPiece(1,1));
             assertEquals(bPawn, testBoard.getPiece(4, 7));
-            assertEquals(wKing, testBoard.getPiece(1, 5));
+            assertEquals(wKing, testBoard.getPiece(5, 1));
         } catch (IndexOutOfBoundsException e) {
             fail("Unexpected IndexOutOfBoundsException");
         }
@@ -189,12 +189,15 @@ public class BoardTest {
 
             assertEquals(5, Board.getSquareCoordinates(12).x);
             assertEquals(2, Board.getSquareCoordinates(12).y);
+
+            assertEquals(1, Board.getSquareCoordinates(0).x);
+            assertEquals(1, Board.getSquareCoordinates(0).y);
         } catch (IndexOutOfBoundsException e) {
             fail("Unexpected IndexOutOfBoundsException");
         }
 
         try {
-            Point p = Board.getSquareCoordinates(31);
+            Point p = Board.getSquareCoordinates(64);
             fail("Expected an IndexOutOfBoundsException");
         } catch (IndexOutOfBoundsException e) {
             // pass

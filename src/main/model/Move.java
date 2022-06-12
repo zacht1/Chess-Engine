@@ -2,6 +2,8 @@ package model;
 
 import enumerations.MoveType;
 
+import static java.lang.Math.abs;
+
 public class Move {
     private Board board;
 
@@ -13,15 +15,59 @@ public class Move {
     private int movedPiece;
     private int capturedPiece;
 
+    private boolean check;
+    private boolean checkmate;
+
+    private boolean isWhiteMove;
+
     private MoveType moveType;
 
     /**
-     * Constructs a new chess move with the specified starting square, ending square, move piece, and capture piece
+     * Constructs a new chess move with the specified starting square, ending square, move piece, and captured piece
      * Call helper methods to determine move type
      * Move may or may not be legal
      */
     public Move(Board board, int startX, int startY, int endX, int endY) {
-        // stub
+        this.board = board;
+        this.startX = startX;
+        this.startY = startY;
+        this.endX = endX;
+        this.endY = endY;
+
+        this.movedPiece = board.getPiece(startX, startY);
+        this.capturedPiece = board.getPiece(endX, endY);
+
+        this.moveType = MoveType.NORMAL;
+        determineMoveType();
+
+        if (moveType == MoveType.EN_PASSANT) {
+            this.capturedPiece = board.getPiece(endX, startY);
+        }
+
+        this.isWhiteMove = movedPiece > 0;
+    }
+
+    private void determineMoveType() {
+        // capture
+        if (capturedPiece != 0) {
+            this.moveType = MoveType.CAPTURE;
+        }
+
+        // castle
+        if (abs(movedPiece) == Piece.wKing && startX == 5 && (startY == 1 || startY == 8)) {
+            if (endX == 7 && (endY == 1 || endY == 8)) {
+                this.moveType = MoveType.KING_SIDE_CASTLE; // king side
+            }
+
+            if (endX == 3 && (endY == 1 || endY == 8)) {
+                this.moveType = MoveType.QUEEN_SIDE_CASTLE; // queen side
+            }
+        }
+
+        // en passant
+        if (abs(movedPiece) == Piece.wPawn && capturedPiece == 0 && (startY == 5 || startY == 4) && endX != endY) {
+            this.moveType = MoveType.EN_PASSANT;
+        }
     }
 
     /**
@@ -30,7 +76,42 @@ public class Move {
      * @return String formatted move
      */
     public String formatMove() {
-        return ""; // stub
+        String pieceChar;
+        String endCoordLetter;
+        String checkSymbol = "";
+
+        pieceChar = Piece.getPieceChar(movedPiece);
+
+        endCoordLetter = Board.getCharCoord(endX);
+
+        switch (moveType) {
+            case QUEEN_SIDE_CASTLE:
+                return "O-O-O";
+            case KING_SIDE_CASTLE:
+                return "O-O";
+            case EN_PASSANT:
+                return pieceChar + "x" + endCoordLetter + endY + checkSymbol;
+            case QUEEN_PROMOTION:
+                return endCoordLetter + endY + "=" + "Q";
+            case KNIGHT_PROMOTION:
+                return endCoordLetter + endY + "=" + "N";
+            case ROOK_PROMOTION:
+                return endCoordLetter + endY + "=" + "R";
+            case BISHOP_PROMOTION:
+                return endCoordLetter + endY + "=" + "B";
+        }
+
+        if (check) {
+            checkSymbol = "+";
+        } else if (checkmate) {
+            checkSymbol = "#";
+        }
+
+        if (capturedPiece == 0) {
+            return pieceChar + endCoordLetter + endY + checkSymbol;
+        } else {
+            return pieceChar + "x" + endCoordLetter + endY + checkSymbol;
+        }
     }
 
 
@@ -45,32 +126,16 @@ public class Move {
         return startX;
     }
 
-    public void setStartX(int startX) {
-        this.startX = startX;
-    }
-
     public int getStartY() {
         return startY;
-    }
-
-    public void setStartY(int startY) {
-        this.startY = startY;
     }
 
     public int getEndX() {
         return endX;
     }
 
-    public void setEndX(int endX) {
-        this.endX = endX;
-    }
-
     public int getEndY() {
         return endY;
-    }
-
-    public void setEndY(int endY) {
-        this.endY = endY;
     }
 
     public int getMovedPiece() {
@@ -90,7 +155,8 @@ public class Move {
     }
 
     public boolean isPromotionMove() {
-        return false; // stub
+        return this.moveType == MoveType.BISHOP_PROMOTION || this.moveType == MoveType.KNIGHT_PROMOTION ||
+                this.moveType == MoveType.QUEEN_PROMOTION || this.moveType == MoveType.ROOK_PROMOTION;
     }
 
     public void setKingSideCastleMove() {
@@ -147,5 +213,45 @@ public class Move {
 
     public boolean isBishopPromotionMove() {
         return this.moveType == MoveType.BISHOP_PROMOTION;
+    }
+
+    public boolean isBasicMove() {
+        return this.moveType == MoveType.NORMAL;
+    }
+
+    public boolean isCapture() {
+        return this.moveType == MoveType.CAPTURE;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
+    }
+
+    public boolean isCheckmate() {
+        return checkmate;
+    }
+
+    public void setCheckmate(boolean checkmate) {
+        this.checkmate = checkmate;
+    }
+
+    public boolean isWhiteMove() {
+        return isWhiteMove;
+    }
+
+    public void setWhiteMove(boolean whiteMove) {
+        isWhiteMove = whiteMove;
+    }
+
+    public boolean isWhiteRookMove() {
+        return movedPiece == Piece.wRook;
+    }
+
+    public boolean isBlackRookMove() {
+        return movedPiece == Piece.bRook;
     }
 }

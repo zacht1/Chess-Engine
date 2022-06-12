@@ -1,5 +1,7 @@
 package model;
 
+import static java.lang.Math.abs;
+
 public class Piece {
     public static int empty = 0;
 
@@ -24,7 +26,22 @@ public class Piece {
      * @throws IndexOutOfBoundsException if given int is not a piece
      */
     public static String getPieceChar(int piece) {
-        return ""; // stub
+        switch (abs(piece)) {
+            case 1:
+                return "";
+            case 2:
+                return "N";
+            case 3:
+                return "B";
+            case 4:
+                return "R";
+            case 5:
+                return "Q";
+            case 6:
+                return "K";
+            default:
+                throw new IndexOutOfBoundsException();
+        }
     }
 
     /**
@@ -34,6 +51,21 @@ public class Piece {
      * @throws IndexOutOfBoundsException if given int is not a piece
      */
     public static String getPieceName(int piece) {
-        return ""; // stub
+        switch (abs(piece)) {
+            case 1:
+                return "pawn";
+            case 2:
+                return "knight";
+            case 3:
+                return "bishop";
+            case 4:
+                return "rook";
+            case 5:
+                return "queen";
+            case 6:
+                return "king";
+            default:
+                throw new IndexOutOfBoundsException();
+        }
     }
 }

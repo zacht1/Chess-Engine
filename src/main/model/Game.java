@@ -3,6 +3,7 @@ package model;
 import enumerations.CheckStatus;
 import enumerations.GameStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -24,7 +25,14 @@ public class Game {
      * black player and one white player, a current turn of white + human player, and an empty moveList
      */
     public Game() {
-        // stub
+        this.board = new Board();
+        this.gameStatus = GameStatus.ACTIVE;
+        this.checkStatus = CheckStatus.NONE;
+        this.players = new Player[2];
+        players[0] = new Player(true);
+        players[1] = new Player(false);
+        this.currentTurn = players[0];
+        this.moveList = new ArrayList<>();
     }
 
     /**
@@ -34,21 +42,69 @@ public class Game {
      * @return true if move is legal, false otherwise
      */
     public boolean playMove(Move move) {
+        if (!(move.isWhiteMove() == currentTurn.isWhite())) {
+            return false;
+        }
+
+        if (!isLegal(move)) {
+            return false;
+        }
+
+        this.board.makeMove(move);
+
+        if (move.isWhiteRookMove()) {
+            whiteCastlingRights(move);
+        }
+
+        if (move.isBlackRookMove()) {
+            blackCastlingRights(move);
+        }
+
+        this.moveList.add(move);
+
+        nextTurn();
+
+        // TODO: checks & checkmates
+        return true;
+    }
+
+    private boolean isLegal(Move move) {
         return true; // stub
+    }
+
+    private void whiteCastlingRights(Move move) {
+        if (move.getStartX() == 1 && move.getStartY() == 1) {
+            whiteQueenSideCastling = false;
+        } else if (move.getStartX() == 8 && move.getStartY() == 1) {
+            whiteKingSideCastling = false;
+        }
+    }
+
+    private void blackCastlingRights(Move move) {
+        if (move.getStartX() == 1 && move.getStartY() == 8) {
+            blackQueenSideCastling = false;
+        } else if (move.getStartX() == 8 && move.getStartY() == 8) {
+            blackKingSideCastling = false;
+        }
     }
 
     /**
      * Change the currentTurn to the opposite of what it currently is
      */
     public void nextTurn() {
-        // stub
+        if (currentTurn == players[0]) {
+            currentTurn = players[1];
+        } else {
+            currentTurn = players[0];
+        }
     }
 
     /**
      * Set this board to the position in the given Forsyth–Edwards Notation (FEN) string
      */
     public void setBoardFEN(String fen) {
-        // stub
+        FenUtility fenUtility = new FenUtility();
+        fenUtility.loadGameFromFEN(this, fen);
     }
 
     /**
