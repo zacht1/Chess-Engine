@@ -1,0 +1,13 @@
+package enumerations;
+
+public enum MoveType {
+    NORMAL,
+    CAPTURE,
+    QUEEN_SIDE_CASTLE,
+    KING_SIDE_CASTLE,
+    EN_PASSANT,
+    QUEEN_PROMOTION,
+    KNIGHT_PROMOTION,
+    ROOK_PROMOTION,
+    BISHOP_PROMOTION
+}

@@ -1,0 +1,14 @@
+package enumerations;
+
+public enum GameStatus {
+    ACTIVE,
+    BLACK_CHECKMATE,
+    WHITE_CHECKMATE,
+    BLACK_TIMEOUT,
+    WHITE_TIMEOUT,
+    WHITE_FORFEIT,
+    BLACK_FORFEIT,
+    STALEMATE,
+    BLACK_RESIGNATION,
+    WHITE_RESIGNATION
+}
