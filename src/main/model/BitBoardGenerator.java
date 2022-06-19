@@ -1,13 +1,12 @@
 package model;
 
-import java.util.Arrays;
-
 public class BitBoardGenerator {
 
     /**
      * Generate a list of bitboards from the given integer array of the current chess board
      *
-     * @return list a bitboards in order of white then black, pawn through king
+     * @param board integer array of the chess board
+     * @return array of bitboards in order of white then black: pawn, knight, bishop, rook, queen king
      */
     public static long[] arrayToBitBoards(int[] board) {
         long whitePawn = 0L, whiteKnight = 0L, whiteBishop = 0L, whiteRook = 0L, whiteQueen = 0L, whiteKing = 0L,
@@ -51,8 +50,6 @@ public class BitBoardGenerator {
                 blackPawn, blackKnight, blackBishop, blackRook, blackQueen, blackKing
         };
 
-        System.out.println(Arrays.toString(bitboards));
-
         return bitboards;
     }
 
@@ -63,5 +60,64 @@ public class BitBoardGenerator {
         } else {
             return Long.parseLong("1" + binaryString.substring(2), 2) * 2;
         }
+    }
+
+    /**
+     * Return an integer array of the chess board in the position given by the given bitboards
+     *
+     * @param bitboards array of bitboards in order of white then black: pawn, knight, bishop, rook, queen, king
+     * @return integer array of the chess board
+     */
+    public static int[] bitboardsToArray(long[] bitboards) {
+        int[] board = new int[64];
+        // bitboards indices: 0=whitePawns, 1=whiteKnights, 2=whiteBishops, 3=whiteRooks, 4=whiteQueen, 5=whiteKing,
+        //                    6=blackPawns, 7=blackKnights, 8=blackBishops, 9=blackRooks, 10=blackQueen, 11=blackKing
+
+        for (int n = 0; n < 12; n++) {
+            String binary = Long.toBinaryString(bitboards[n]);
+            int bitsToBeAddedToFront = 64 - binary.length();
+            String zeros = new String(new char[bitsToBeAddedToFront]).replace("\0", "0");
+            StringBuilder binaryStringBuilder = new StringBuilder();
+            binaryStringBuilder.append(zeros).append(binary);
+            binaryStringBuilder.reverse();
+
+            String binary64Bit = binaryStringBuilder.toString();
+
+            int piece = 0;
+            switch (n) {
+                case 0: piece = 1;
+                    break;
+                case 1: piece = 2;
+                    break;
+                case 2: piece = 3;
+                    break;
+                case 3: piece = 4;
+                    break;
+                case 4: piece = 5;
+                    break;
+                case 5: piece = 6;
+                    break;
+                case 6: piece = -1;
+                    break;
+                case 7: piece = -2;
+                    break;
+                case 8: piece = -3;
+                    break;
+                case 9: piece = -4;
+                    break;
+                case 10: piece = -5;
+                    break;
+                case 11: piece = -6;
+                    break;
+            }
+
+            for (int i = 0; i < 64; i++) {
+                if (binary64Bit.toCharArray()[i] == '1') {
+                    board[i] = piece;
+                }
+            }
+        }
+
+        return board;
     }
 }
