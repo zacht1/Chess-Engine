@@ -110,6 +110,9 @@ public class Move {
         if (capturedPiece == 0) {
             return pieceChar + endCoordLetter + endY + checkSymbol;
         } else {
+            if (abs(movedPiece) == 1) {
+                return Board.getCharCoord(startX) + "x" + endCoordLetter + endY + checkSymbol;
+            }
             return pieceChar + "x" + endCoordLetter + endY + checkSymbol;
         }
     }

@@ -167,7 +167,7 @@ public class Board {
     /**
      *  Set this board to the position in the given Forsyth–Edwards Notation (FEN) string
      */
-    private void setBoardFEN(String fen) {
+    public void setBoardFEN(String fen) {
         FenUtility fenUtility = new FenUtility();
 
         fenUtility.loadPositionFromFEN(this, fen);
