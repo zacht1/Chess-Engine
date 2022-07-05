@@ -165,6 +165,16 @@ public class Board {
     }
 
     /**
+     * Get the chess notation coordinate of the square with the given index
+     */
+    public static String getChessNotation(int index) {
+        String x = getCharCoord(getSquareCoordinates(index).x);
+        int y = getSquareCoordinates(index).y;
+
+        return x + y;
+    }
+
+    /**
      *  Set this board to the position in the given Forsyth–Edwards Notation (FEN) string
      */
     public void setBoardFEN(String fen) {
