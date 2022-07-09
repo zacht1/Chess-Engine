@@ -58,7 +58,6 @@ public class MoveGeneratorTest {
         for (Move move: whiteMoveList) {
             moveList.add(move.formatMove());
         }
-        System.out.println(moveList);
 
         assertEquals(7, whiteMoveList.size());
 
@@ -77,13 +76,6 @@ public class MoveGeneratorTest {
 
         testGame.setBoardFEN("8/pr5p/3k1n1r/3b4/8/8/PP3PPP/R2R2K1 b Q - 1 7");
         List<Move> blackMoveList = testMoveGenerator.generateMoves(testGame, blackPlayer);
-
-//        List<String> moves = new ArrayList<>();
-//        for (Move move: blackMoveList) {
-//            moves.add(move.formatMove());
-//        }
-//        System.out.println(moves);
-
         assertTrue(testMoveGenerator.doPinsExistInPosition());
         assertEquals(35, testMoveGenerator.getPinnedPieces().get(0));
         assertEquals(31, blackMoveList.size());

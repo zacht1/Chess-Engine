@@ -58,7 +58,7 @@ public class MaskGenerator {
      * Generate all squares in between the bishop, on the given index, and the friendly king
      * @param diagonalPieceIndex the index of the bishop on the current board
      */
-    public List<Integer> diagonalSlidingRaysToSquare(int squareIndex, int diagonalPieceIndex) {
+    private List<Integer> diagonalSlidingRaysToSquare(int squareIndex, int diagonalPieceIndex) {
         List<Integer> slidingAttackRay = new ArrayList<>();
 
         int squareX = Board.getSquareCoordinates(squareIndex).x;
@@ -103,7 +103,7 @@ public class MaskGenerator {
      * Generate all squares in between the rook, on the given index, and the friendly king
      * @param straightPieceIndex the index of the rook on the current board
      */
-    public List<Integer> straightSlidingRaysToSquares(int squareIndex, int straightPieceIndex) {
+    private List<Integer> straightSlidingRaysToSquares(int squareIndex, int straightPieceIndex) {
         List<Integer> slidingAttackRay = new ArrayList<>();
 
         int kingX = Board.getSquareCoordinates(squareIndex).x;

@@ -23,9 +23,11 @@ public class MoveGenerator {
     private CheckMoveGenerator checkMoveGenerator;
     private PinGenerator pinGenerator;
     private MaskGenerator maskGenerator;
+    private PinMoveGenerator pinMoveGenerator;
 
     private boolean pinsExistInPosition;
     private List<Integer> pinnedPieces;
+    private List<Integer> pinningPieces;
     private Set<Integer> threatMap;
     private List<Move> legalMoves;
 
@@ -110,9 +112,11 @@ public class MoveGenerator {
         this.maskGenerator = new MaskGenerator(checkGenerator, friendlyKingIndex);
         this.pinGenerator = new PinGenerator(board, whiteToPlay);
         this.checkMoveGenerator = new CheckMoveGenerator(game, whiteToPlay, maskGenerator, threatMap, pinGenerator);
+        this.pinMoveGenerator = new PinMoveGenerator(game, whiteToPlay);
 
         this.pinsExistInPosition = pinGenerator.doPinsExistInPosition();
         this.pinnedPieces = pinGenerator.getPinnedPieces();
+        this.pinningPieces = pinGenerator.getPinningPieces();
     }
 
     /**
@@ -123,12 +127,11 @@ public class MoveGenerator {
             int pinningPieceIndex = 0;
             for (int pinnedPieceIndex: pinnedPieces) {
                 if (pinnedPieceIndex == Board.getSquareIndex(startX, startY)) {
-                    generateBlackPawnPinMoves(pinnedPieceIndex, pinningPieceIndex);
+                    legalMoves.addAll(pinMoveGenerator.generateBlackPawnMoves(pinnedPieceIndex, pinningPieces.get(pinningPieceIndex)));
+                    return;
                 }
-
-                    pinningPieceIndex++;
+                pinningPieceIndex++;
             }
-            return;
         }
 
         // 1 square move
@@ -160,39 +163,19 @@ public class MoveGenerator {
         }
     }
 
-    private void generateBlackPawnPinMoves(int pinnedPieceIndex, int pinningPieceIndex) {
-        int pinnedPieceX = Board.getSquareCoordinates(pinnedPieceIndex).x;
-        int pinnedPieceY = Board.getSquareCoordinates(pinnedPieceIndex).y;
-
-        int pinningPieceX = Board.getSquareCoordinates(pinningPieceIndex).x;
-        int pinningPieceY = Board.getSquareCoordinates(pinningPieceIndex).y;
-
-        if (pinnedPieceX == pinningPieceX) { // piece is pinned on the vertical and piece can move
-            // 1 square move
-            if (pinnedPieceY - 1 >= 1 && board.getPiece(pinnedPieceX, pinnedPieceY - 1) == 0) {
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX, pinnedPieceY - 1));
-            }
-
-            // 2 square move
-            if (pinnedPieceY == 7 && board.getPiece(pinnedPieceX, pinnedPieceY - 1) == 0 && board.getPiece(pinnedPieceX, pinnedPieceY - 2) == 0) {
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX, pinnedPieceY - 2));
-            }
-        } else { // piece is pinned on the diagonal
-            if (pinnedPieceIndex - 9 == pinningPieceIndex) { // pinning piece is capturable to the left of pinned pawn
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX - 1, pinnedPieceY - 1));
-            } else if (pinnedPieceIndex - 7 == pinningPieceIndex) { // pinning piece is capturable to the right of pinned pawn
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX + 1, pinnedPieceY + 1));
-            } // en passant moves
-        }
-    }
-
     /**
      * Generate all pseudo-legal white pawn moves originating from the square at the given startX and startY
      */
     private void generateWhitePawnMoves(int startX, int startY) {
         if (pinsExistInPosition) {
-            // can only move straight if the pieces is pinned vertically
-            // can only capture if piece pinning the pawn is right next to it
+            int pinningPieceIndex = 0;
+            for (int pinnedPieceIndex: pinnedPieces) {
+                if (pinnedPieceIndex == Board.getSquareIndex(startX, startY)) {
+                    legalMoves.addAll(pinMoveGenerator.generateWhitePawnMoves(pinnedPieceIndex, pinningPieces.get(pinningPieceIndex)));
+                    return;
+                }
+                pinningPieceIndex++;
+            }
         }
 
         // 1 square move
@@ -303,11 +286,15 @@ public class MoveGenerator {
      */
     private void generateBishopMoves(int startX, int startY) {
         if (pinsExistInPosition) {
-            // step 1: check that the piece at startX and startY is pinned
-            // step 2: where is pin coming from diagonal or vertical
-            // step 3: if piece is pinned vertically, no legal moves, otherwise
-            //         generate moves between pinned piece and pinning piece, those are the only legal moves
-            //         (including capturing pinned piece)
+
+            int pinningPieceIndex = 0;
+            for (int pinnedPieceIndex: pinnedPieces) {
+                if (pinnedPieceIndex == Board.getSquareIndex(startX, startY)) {
+                    legalMoves.addAll(pinMoveGenerator.generateBishopMoves(pinnedPieceIndex, pinningPieces.get(pinningPieceIndex)));
+                    return;
+                }
+                pinningPieceIndex++;
+            }
         }
 
         generateNorthWestMoves(startX, startY);
@@ -321,11 +308,14 @@ public class MoveGenerator {
      */
     private void generateRookMoves(int startX, int startY) {
         if (pinsExistInPosition) {
-            // step 1: check that the piece at startX and startY is pinned
-            // step 2: where is pin coming from diagonal or vertical
-            // step 3: if piece is pinned diagonally, no legal moves, otherwise
-            //         generate moves between pinned piece and pinning piece, those are the only legal moves
-            //         (including capturing pinned piece)
+            int pinningPieceIndex = 0;
+            for (int pinnedPieceIndex: pinnedPieces) {
+                if (pinnedPieceIndex == Board.getSquareIndex(startX, startY)) {
+                    legalMoves.addAll(pinMoveGenerator.generateRookMoves(pinnedPieceIndex, pinningPieces.get(pinningPieceIndex)));
+                    return;
+                }
+                pinningPieceIndex++;
+            }
         }
 
         generateNorthMoves(startX, startY);
@@ -339,10 +329,14 @@ public class MoveGenerator {
      */
     private void generateQueenMoves(int startX, int startY)  {
         if (pinsExistInPosition) {
-            // step 1: check that the piece at startX and startY is pinned
-            // step 2: where is pin coming from diagonal or vertical
-            // step 3: generate moves between  pinned piece and pinning piece, those are the only legal moves
-            //         (including capturing pinned piece)
+            int pinningPieceIndex = 0;
+            for (int pinnedPieceIndex: pinnedPieces) {
+                if (pinnedPieceIndex == Board.getSquareIndex(startX, startY)) {
+                    legalMoves.addAll(pinMoveGenerator.generateQueenMoves(pinnedPieceIndex, pinningPieces.get(pinningPieceIndex)));
+                    return;
+                }
+                pinningPieceIndex++;
+            }
         }
 
         // straight moves
