@@ -19,9 +19,6 @@ public class ThreatMapGenerator {
     public Set<Integer> generateWhiteThreatMap(Game game) {
         init(game);
 
-        this.board = new Board();
-        board.setBoard(game.getBoard().getBoard().clone());
-
         int i = 0;
         for (int piece: board.getBoard()) {
             if (piece == -6) {
@@ -67,9 +64,6 @@ public class ThreatMapGenerator {
      */
     public Set<Integer> generateBlackThreatMap(Game game) {
         init(game);
-
-        this.board = new Board();
-        board.setBoard(game.getBoard().getBoard().clone());
 
         int i = 0;
         for (int piece: board.getBoard()) {
@@ -180,6 +174,8 @@ public class ThreatMapGenerator {
      */
     private void init(Game game) {
         this.game = game;
+        this.board = new Board();
+        board.setBoard(game.getBoard().getBoard().clone());
         this.threatMap = new LinkedHashSet<>();
     }
 

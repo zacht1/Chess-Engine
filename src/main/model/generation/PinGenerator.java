@@ -7,11 +7,12 @@ import java.util.List;
 
 // generates all friendly pinned pieces and all enemy pinning pieces
 public class PinGenerator {
-    private List<Integer> pinnedPieces; // pieces that are being pinned
-    private List<Integer> pinningPieces; // pieces that are pinning an opposite colour piece
     private Board board;
     private boolean whiteToPlay;
     private boolean pinsExistInPosition;
+
+    private List<Integer> pinnedPieces; // pieces that are being pinned
+    private List<Integer> pinningPieces; // pieces that are pinning an opposite colour piece
 
     /**
      * Initialize pin move generator object

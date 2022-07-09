@@ -24,6 +24,8 @@ public class CheckGenerator {
     private boolean whiteToPlay;
     private ThreatMapGenerator threatMapGenerator;
 
+    // determines whether current player is in check in current board, and generates all pieces that are checking the
+    // current players king
     public CheckGenerator(Game game, int friendlyKingIndex, boolean whiteToPlay, ThreatMapGenerator threatMapGenerator) {
         this.inCheck = false;
         this.inDoubleCheck = false;

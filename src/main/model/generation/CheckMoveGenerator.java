@@ -17,13 +17,9 @@ public class CheckMoveGenerator {
     private boolean whiteToPlay;
     private List<Integer> captureMask;
     private List<Integer> pushMask;
-
-    private boolean inCheck;
-    private boolean inDoubleCheck;
-
+    private MaskGenerator maskGenerator;
     private PinGenerator pinGenerator;
     private Set<Integer> threatMap;
-
     private List<Move> legalMoves;
 
     /**
@@ -32,26 +28,28 @@ public class CheckMoveGenerator {
      * @param game current chess game
      * @param whiteToPlay true if current turn is white
      */
-    public CheckMoveGenerator(Game game, boolean whiteToPlay, List<Integer> captureMask,
-                              List<Integer> pushMask, Set<Integer> threatMap,
+    public CheckMoveGenerator(Game game, boolean whiteToPlay, MaskGenerator maskGenerator, Set<Integer> threatMap,
                               PinGenerator pinGenerator) {
         this.game = game;
         this.board = game.getBoard();
         this.whiteToPlay = whiteToPlay;
-        this.captureMask = captureMask;
-        this.pushMask = pushMask;
+        this.maskGenerator = maskGenerator;
+        this.captureMask = maskGenerator.getCaptureMask();
+        this.pushMask = maskGenerator.getPushMask();
         this.pinGenerator = pinGenerator;
 
         this.threatMap = threatMap;
-        this.inCheck = false;
-        this.inDoubleCheck = false;
         this.legalMoves = new ArrayList<>();
     }
 
     /**
      * Generate all legal moves that can escape from check
      */
-    private void generateCheckEscapingMoves() {
+    public List<Move> generateCheckEscapingMoves() {
+        maskGenerator.updateMasksInCheck();
+        this.captureMask = maskGenerator.getCaptureMask();
+        this.pushMask = maskGenerator.getPushMask();
+
         int index = 0;
         for (int piece: game.getBoard().getBoard()) {
 
@@ -87,6 +85,8 @@ public class CheckMoveGenerator {
 
             index++;
         }
+
+        return legalMoves;
     }
 
     /**
@@ -723,14 +723,4 @@ public class CheckMoveGenerator {
         }
     }
 
-    /**
-     * Getters & Setters
-     */
-    public boolean isInCheck() {
-        return inCheck;
-    }
-
-    public boolean isInDoubleCheck() {
-        return inDoubleCheck;
-    }
 }

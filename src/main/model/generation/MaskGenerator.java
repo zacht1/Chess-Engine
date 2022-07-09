@@ -13,7 +13,7 @@ public class MaskGenerator {
     private CheckGenerator checkGenerator;
     private int friendlyKingIndex;
 
-    public MaskGenerator(CheckGenerator checkGenerator,int friendlyKingIndex) {
+    public MaskGenerator(CheckGenerator checkGenerator, int friendlyKingIndex) {
         this.checkGenerator = checkGenerator;
         this.friendlyKingIndex = friendlyKingIndex;
         captureMask = new ArrayList<>();
@@ -25,6 +25,9 @@ public class MaskGenerator {
         }
     }
 
+    /**
+     * Update the checkers and push maps
+     */
     public void updateMasksInCheck() {
         List<Integer> checkers = checkGenerator.getCheckers();
         List<Integer> bishopCheckers = checkGenerator.getBishopCheckers();
@@ -47,7 +50,7 @@ public class MaskGenerator {
                 pushMask.addAll(diagonalSlidingRaysToSquare(friendlyKingIndex, queenCheckers.get(0)));
                 pushMask.addAll(straightSlidingRaysToSquares(friendlyKingIndex, queenCheckers.get(0)));
             }
-            // otherwise pushMask is empty because we can't block the check
+            // otherwise, pushMask is empty because we can't block the check
         }
     }
 

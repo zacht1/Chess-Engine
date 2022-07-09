@@ -32,6 +32,7 @@ public class MoveGeneratorTest {
 
         testGame.setBoardFEN("r2qk2r/pppbp1bp/3p2p1/8/2B5/8/PPPPP2P/RNBQK1NR b KQkq - 0 1");
         List<Move> blackMoveList = testMoveGenerator.generateMoves(testGame, blackPlayer);
+
         assertEquals(34, blackMoveList.size());
     }
 
@@ -52,6 +53,13 @@ public class MoveGeneratorTest {
     public void blockCheck() {
         testGame.setBoardFEN("r1bqk1nr/pppp1ppp/2n5/4p3/1b2P3/3P1N2/PPP2PPP/RNBQKB1R w KQkq - 1 4");
         List<Move> whiteMoveList = testMoveGenerator.generateMoves(testGame, whitePlayer);
+
+        List<String> moveList = new ArrayList<>();
+        for (Move move: whiteMoveList) {
+            moveList.add(move.formatMove());
+        }
+        System.out.println(moveList);
+
         assertEquals(7, whiteMoveList.size());
 
         testGame.setBoardFEN("8/5p2/3bk3/5p2/8/1P6/P7/2K1R3 b - - 0 1");
@@ -70,11 +78,11 @@ public class MoveGeneratorTest {
         testGame.setBoardFEN("8/pr5p/3k1n1r/3b4/8/8/PP3PPP/R2R2K1 b Q - 1 7");
         List<Move> blackMoveList = testMoveGenerator.generateMoves(testGame, blackPlayer);
 
-        List<String> moves = new ArrayList<>();
-        for (Move move: blackMoveList) {
-            moves.add(move.formatMove());
-        }
-        System.out.println(moves);
+//        List<String> moves = new ArrayList<>();
+//        for (Move move: blackMoveList) {
+//            moves.add(move.formatMove());
+//        }
+//        System.out.println(moves);
 
         assertTrue(testMoveGenerator.doPinsExistInPosition());
         assertEquals(35, testMoveGenerator.getPinnedPieces().get(0));
