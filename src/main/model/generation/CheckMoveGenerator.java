@@ -10,6 +10,7 @@ import java.util.Set;
 
 import static java.lang.Math.abs;
 
+// generates legal chess moves when current player is in check
 public class CheckMoveGenerator {
     private Game game;
     private Board board;
@@ -20,17 +21,7 @@ public class CheckMoveGenerator {
     private boolean inCheck;
     private boolean inDoubleCheck;
 
-    private ThreatMapGenerator threatMapGenerator;
-    private PinMoveGenerator pinMoveGenerator;
-    private int friendlyKingIndex;
-
-    private List<Integer> checkers;
-    private List<Integer> pawnCheckers;
-    private List<Integer> knightCheckers;
-    private List<Integer> bishopCheckers;
-    private List<Integer> rookCheckers;
-    private List<Integer> queenCheckers;
-
+    private PinGenerator pinGenerator;
     private Set<Integer> threatMap;
 
     private List<Move> legalMoves;
@@ -42,101 +33,19 @@ public class CheckMoveGenerator {
      * @param whiteToPlay true if current turn is white
      */
     public CheckMoveGenerator(Game game, boolean whiteToPlay, List<Integer> captureMask,
-                              List<Integer> pushMask, int friendlyKingIndex,
-                              PinMoveGenerator pinMoveGenerator) {
+                              List<Integer> pushMask, Set<Integer> threatMap,
+                              PinGenerator pinGenerator) {
         this.game = game;
         this.board = game.getBoard();
         this.whiteToPlay = whiteToPlay;
         this.captureMask = captureMask;
         this.pushMask = pushMask;
-        this.pinMoveGenerator = pinMoveGenerator;
+        this.pinGenerator = pinGenerator;
 
-        this.threatMapGenerator = new ThreatMapGenerator();
-        if (whiteToPlay) {
-            threatMap = threatMapGenerator.generateBlackThreatMap(game);
-        } else {
-            threatMap = threatMapGenerator.generateWhiteThreatMap(game);
-        }
-
+        this.threatMap = threatMap;
         this.inCheck = false;
         this.inDoubleCheck = false;
-        this.friendlyKingIndex = friendlyKingIndex;
-        this.checkers = new ArrayList<>();
-        this.pawnCheckers = new ArrayList<>();
-        this.knightCheckers = new ArrayList<>();
-        this.bishopCheckers = new ArrayList<>();
-        this.rookCheckers = new ArrayList<>();
-        this.queenCheckers = new ArrayList<>();
         this.legalMoves = new ArrayList<>();
-
-        inCheck();
-    }
-
-    /**
-     * Determine whether the current player is in check in the current position
-     */
-    private void inCheck() {
-        Set<Integer> possiblePawnChecks;
-        if (whiteToPlay) {
-            possiblePawnChecks = threatMapGenerator.generateWhitePawnThreatMap(game, friendlyKingIndex);
-        } else {
-            possiblePawnChecks = threatMapGenerator.generateBlackPawnThreatMap(game, friendlyKingIndex);
-        }
-
-        Set<Integer> possibleKnightChecks = threatMapGenerator.generateKnightThreatMap(game, friendlyKingIndex);
-        Set<Integer> possibleBishopChecks = threatMapGenerator.generateBishopThreatMap(game, friendlyKingIndex);
-        Set<Integer> possibleRookChecks = threatMapGenerator.generateRookThreatMap(game, friendlyKingIndex);
-        Set<Integer> possibleQueenChecks = threatMapGenerator.generateQueenThreatMap(game, friendlyKingIndex);
-
-        for (Integer index: possiblePawnChecks) {
-            if (board.getPiece(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y) == -1 && whiteToPlay ||
-                    board.getPiece(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y) == 1 && !whiteToPlay) {
-                inDoubleCheck = inCheck;
-                inCheck = true;
-                checkers.add(index);
-                pawnCheckers.add(index);
-            }
-        }
-
-        for (Integer index: possibleKnightChecks) {
-            if (board.getPiece(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y) == -2 && whiteToPlay ||
-                    board.getPiece(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y) == 2 && !whiteToPlay) {
-                inDoubleCheck = inCheck;
-                inCheck = true;
-                checkers.add(index);
-                knightCheckers.add(index);
-            }
-        }
-
-        for (Integer index: possibleBishopChecks) {
-            if (board.getPiece(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y) == -3 && whiteToPlay ||
-                    board.getPiece(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y) == 3 && !whiteToPlay) {
-                inDoubleCheck = inCheck;
-                inCheck = true;
-                checkers.add(index);
-                bishopCheckers.add(index);
-            }
-        }
-
-        for (Integer index: possibleRookChecks) {
-            if (board.getPiece(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y) == -4 && whiteToPlay ||
-                    board.getPiece(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y) == 4 && !whiteToPlay) {
-                inDoubleCheck = inCheck;
-                inCheck = true;
-                checkers.add(index);
-                rookCheckers.add(index);
-            }
-        }
-
-        for (Integer index: possibleQueenChecks) {
-            if (board.getPiece(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y) == -5 && whiteToPlay ||
-                    board.getPiece(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y) == 5 && !whiteToPlay) {
-                inDoubleCheck = inCheck;
-                inCheck = true;
-                checkers.add(index);
-                queenCheckers.add(index);
-            }
-        }
     }
 
     /**
@@ -188,7 +97,7 @@ public class CheckMoveGenerator {
             return;
         }
 
-        if (pinMoveGenerator.doPinsExistInPosition() && pinMoveGenerator.getPinnedPieces().contains(Board.getSquareIndex(startX, startY))) {
+        if (pinGenerator.doPinsExistInPosition() && pinGenerator.getPinnedPieces().contains(Board.getSquareIndex(startX, startY))) {
             return;
         }
 
@@ -274,7 +183,7 @@ public class CheckMoveGenerator {
             return;
         }
 
-        if (pinMoveGenerator.doPinsExistInPosition() && pinMoveGenerator.getPinnedPieces().contains(Board.getSquareIndex(startX, startY))) {
+        if (pinGenerator.doPinsExistInPosition() && pinGenerator.getPinnedPieces().contains(Board.getSquareIndex(startX, startY))) {
             return;
         }
 
@@ -357,7 +266,7 @@ public class CheckMoveGenerator {
      * Generate all legal knight moves originating from the square at the given startX and startY, when in check
      */
     private void generateKnightMovesInCheck(int startX, int startY) {
-        if (pinMoveGenerator.doPinsExistInPosition() && pinMoveGenerator.getPinnedPieces().contains(Board.getSquareIndex(startX, startY))) {
+        if (pinGenerator.doPinsExistInPosition() && pinGenerator.getPinnedPieces().contains(Board.getSquareIndex(startX, startY))) {
             return;
         }
 
@@ -494,7 +403,7 @@ public class CheckMoveGenerator {
      * Generate all legal bishop moves originating from the square at the given startX and startY, when in check
      */
     private void generateBishopMovesInCheck(int startX, int startY) {
-        if (pinMoveGenerator.doPinsExistInPosition() && pinMoveGenerator.getPinnedPieces().contains(Board.getSquareIndex(startX, startY))) {
+        if (pinGenerator.doPinsExistInPosition() && pinGenerator.getPinnedPieces().contains(Board.getSquareIndex(startX, startY))) {
             return;
         }
 
@@ -508,7 +417,7 @@ public class CheckMoveGenerator {
      * Generate all legal rook moves originating from the square at the given startX and startY, when in check
      */
     private void generateRookMovesInCheck(int startX, int startY) {
-        if (pinMoveGenerator.doPinsExistInPosition() && pinMoveGenerator.getPinnedPieces().contains(Board.getSquareIndex(startX, startY))) {
+        if (pinGenerator.doPinsExistInPosition() && pinGenerator.getPinnedPieces().contains(Board.getSquareIndex(startX, startY))) {
             return;
         }
 
@@ -522,7 +431,7 @@ public class CheckMoveGenerator {
      * Generate all legal rook moves originating from the square at the given startX and startY, when in check
      */
     private void generateQueenMovesInCheck(int startX, int startY) {
-        if (pinMoveGenerator.doPinsExistInPosition() && pinMoveGenerator.getPinnedPieces().contains(Board.getSquareIndex(startX, startY))) {
+        if (pinGenerator.doPinsExistInPosition() && pinGenerator.getPinnedPieces().contains(Board.getSquareIndex(startX, startY))) {
             return;
         }
 

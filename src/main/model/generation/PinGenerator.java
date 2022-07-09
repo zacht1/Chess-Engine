@@ -5,7 +5,8 @@ import model.Board;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PinMoveGenerator {
+// generates all friendly pinned pieces and all enemy pinning pieces
+public class PinGenerator {
     private List<Integer> pinnedPieces; // pieces that are being pinned
     private List<Integer> pinningPieces; // pieces that are pinning an opposite colour piece
     private Board board;
@@ -17,7 +18,7 @@ public class PinMoveGenerator {
      * @param board current chess board
      * @param whiteToPlay true if current turn is white
      */
-    public PinMoveGenerator(Board board, boolean whiteToPlay) {
+    public PinGenerator(Board board, boolean whiteToPlay) {
         this.pinnedPieces = new ArrayList<>();
         this.pinningPieces = new ArrayList<>();
         this.board = board;
