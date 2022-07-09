@@ -1,7 +1,9 @@
-package model;
+package model.generation;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import model.Board;
+import model.Game;
+
+import java.util.*;
 
 // Represents a move generator which generates only pseudo-legal chess moves
 public class ThreatMapGenerator {
@@ -16,6 +18,18 @@ public class ThreatMapGenerator {
      */
     public Set<Integer> generateWhiteThreatMap(Game game) {
         init(game);
+
+        this.board = new Board();
+        board.setBoard(game.getBoard().getBoard().clone());
+
+        int i = 0;
+        for (int piece: board.getBoard()) {
+            if (piece == -6) {
+                board.getBoard()[i] = 0;
+                break;
+            }
+            i++;
+        }
 
         int index = 0;
         for (int piece: board.getBoard()) {
@@ -54,6 +68,18 @@ public class ThreatMapGenerator {
     public Set<Integer> generateBlackThreatMap(Game game) {
         init(game);
 
+        this.board = new Board();
+        board.setBoard(game.getBoard().getBoard().clone());
+
+        int i = 0;
+        for (int piece: board.getBoard()) {
+            if (piece == 6) {
+                board.getBoard()[i] = 0;
+                break;
+            }
+            i++;
+        }
+
         int index = 0;
         for (int piece: board.getBoard()) {
 
@@ -84,11 +110,76 @@ public class ThreatMapGenerator {
     }
 
     /**
+     * Generate a white pawn threat map from the given index
+     */
+    public Set<Integer> generateWhitePawnThreatMap(Game game, int index) {
+        init(game);
+
+        whitePawnThreatMap(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y);
+
+        return threatMap;
+    }
+
+    /**
+     * Generate a black pawn threat map from the given index
+     */
+    public Set<Integer> generateBlackPawnThreatMap(Game game, int index) {
+        init(game);
+
+        blackPawnThreatMap(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y);
+
+        return threatMap;
+    }
+
+    /**
+     * Generate a knight threat map from the given index
+     */
+    public Set<Integer> generateKnightThreatMap(Game game, int index) {
+        init(game);
+
+        knightThreatMap(index, Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y);
+
+        return threatMap;
+    }
+
+    /**
+     * Generate a bishop threat map from the given index
+     */
+    public Set<Integer> generateBishopThreatMap(Game game, int index) {
+        init(game);
+
+        bishopThreatMap(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y);
+
+        return threatMap;
+    }
+
+    /**
+     * Generate a rook threat map from the given index
+     */
+    public Set<Integer> generateRookThreatMap(Game game, int index) {
+        init(game);
+
+        rookThreatMap(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y);
+
+        return threatMap;
+    }
+
+    /**
+     * Generate a queen threat map from the given index
+     */
+    public Set<Integer> generateQueenThreatMap(Game game, int index) {
+        init(game);
+
+        queenThreatMap(Board.getSquareCoordinates(index).x, Board.getSquareCoordinates(index).y);
+
+        return threatMap;
+    }
+
+    /**
      * Initialize the current ThreatMapGenerator object
      */
     private void init(Game game) {
         this.game = game;
-        this.board = game.getBoard();
         this.threatMap = new LinkedHashSet<>();
     }
 

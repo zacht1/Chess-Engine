@@ -1,4 +1,9 @@
-package model;
+package model.generation;
+
+import model.Board;
+import model.Game;
+import model.Move;
+import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;

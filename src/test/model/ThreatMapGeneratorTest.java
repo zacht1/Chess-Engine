@@ -1,5 +1,6 @@
 package model;
 
+import model.generation.ThreatMapGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +25,12 @@ public class ThreatMapGeneratorTest {
         testGame.setBoardFEN("rnbqkbnr/pppppppp/8/8/1P1Q4/5N2/PBPPPPPP/RN2KB1R w KQkq - 0 1");
 
         Set<Integer> whiteThreatMap = testThreatMapGenerator.generateWhiteThreatMap(testGame);
+
+        List<String> list = new ArrayList<>();
+        for (Integer index: whiteThreatMap) {
+            list.add(Board.getChessNotation(index));
+        }
+        System.out.println(list);
 
         assertEquals(40, whiteThreatMap.size());
     }
