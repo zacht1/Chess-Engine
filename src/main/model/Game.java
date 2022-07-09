@@ -15,8 +15,10 @@ public class Game {
     private List<Move> moveList;
 
     // is castling still legal
+    private boolean whiteCastling = true;
     private boolean whiteQueenSideCastling = true;
     private boolean whiteKingSideCastling = true;
+    private boolean blackCastling = true;
     private boolean blackQueenSideCastling = true;
     private boolean blackKingSideCastling = true;
 
@@ -142,7 +144,11 @@ public class Game {
         this.checkStatus = checkStatus;
     }
 
-    public boolean isWhiteQueenSideCastling() {
+    public boolean canWhiteCastle() {
+        return whiteCastling;
+    }
+
+    public boolean canWhiteQueenSideCastle() {
         return whiteQueenSideCastling;
     }
 
@@ -150,7 +156,7 @@ public class Game {
         this.whiteQueenSideCastling = whiteQueenSideCastling;
     }
 
-    public boolean isWhiteKingSideCastling() {
+    public boolean canWhiteKingSideCastle() {
         return whiteKingSideCastling;
     }
 
@@ -158,7 +164,11 @@ public class Game {
         this.whiteKingSideCastling = whiteKingSideCastling;
     }
 
-    public boolean isBlackQueenSideCastling() {
+    public boolean canBlackCastle() {
+        return blackCastling;
+    }
+
+    public boolean canBlackQueenSideCastle() {
         return blackQueenSideCastling;
     }
 
@@ -166,7 +176,7 @@ public class Game {
         this.blackQueenSideCastling = blackQueenSideCastling;
     }
 
-    public boolean isBlackKingSideCastling() {
+    public boolean canBlackKingSideCastle() {
         return blackKingSideCastling;
     }
 

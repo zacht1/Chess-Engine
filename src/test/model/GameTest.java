@@ -43,10 +43,10 @@ public class GameTest {
 
         assertEquals(0, testGame.getMoveList().size());
 
-        assertTrue(testGame.isWhiteQueenSideCastling());
-        assertTrue(testGame.isWhiteKingSideCastling());
-        assertTrue(testGame.isBlackQueenSideCastling());
-        assertTrue(testGame.isBlackKingSideCastling());
+        assertTrue(testGame.canWhiteQueenSideCastle());
+        assertTrue(testGame.canWhiteKingSideCastle());
+        assertTrue(testGame.canBlackQueenSideCastle());
+        assertTrue(testGame.canBlackKingSideCastle());
     }
 
     @Test

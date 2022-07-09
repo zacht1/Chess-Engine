@@ -90,7 +90,7 @@ public class Move {
             case KING_SIDE_CASTLE:
                 return "O-O";
             case EN_PASSANT:
-                return pieceChar + "x" + endCoordLetter + endY + checkSymbol;
+                return Board.getCharCoord(startX) + "x" + endCoordLetter + endY + checkSymbol;
             case QUEEN_PROMOTION:
                 return endCoordLetter + endY + "=" + "Q";
             case KNIGHT_PROMOTION:

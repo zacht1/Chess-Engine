@@ -12,10 +12,14 @@ public class PinMoveGenerator {
     private Game game;
     private Board board;
     private boolean whiteToPlay;
+    private int friendlyKingX;
+    private int friendlyKingY;
 
-    public PinMoveGenerator(Game game, boolean whiteToPlay) {
+    public PinMoveGenerator(Game game, boolean whiteToPlay, int friendlyKingIndex) {
         this.game = game;
         this.board = game.getBoard();
+        this.friendlyKingX = Board.getSquareCoordinates(friendlyKingIndex).x;
+        this.friendlyKingY = Board.getSquareCoordinates(friendlyKingIndex).y;
         this.whiteToPlay = whiteToPlay;
     }
 
@@ -99,6 +103,7 @@ public class PinMoveGenerator {
         if (!(pinnedPieceX == pinningPieceX || pinnedPieceY == pinningPieceY)) {
             // pin is coming on the diagonal
             List<Point> possibleMoveEndSquareIndices = diagonalSlidingRaysToSquare(pinnedPieceX, pinnedPieceY, pinningPieceX, pinningPieceY);
+            possibleMoveEndSquareIndices.addAll(diagonalSlidingRaysUpToSquare(pinnedPieceX, pinnedPieceY, friendlyKingX, friendlyKingY));
 
             for (Point square: possibleMoveEndSquareIndices) {
                 legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, square.x, square.y));
@@ -125,6 +130,7 @@ public class PinMoveGenerator {
         if (pinnedPieceX == pinningPieceX || pinnedPieceY == pinningPieceY) {
             // pin is coming on straight
             List<Point> possibleMoveEndSquareIndices = straightSlidingRaysToSquare(pinnedPieceX, pinnedPieceY, pinningPieceX, pinningPieceY);
+            possibleMoveEndSquareIndices.addAll(straightSlidingRaysUpToSquare(pinnedPieceX, pinnedPieceY, friendlyKingX, friendlyKingY));
 
             for (Point square: possibleMoveEndSquareIndices) {
                 legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, square.x, square.y));
@@ -151,6 +157,7 @@ public class PinMoveGenerator {
         if (pinnedPieceX == pinningPieceX || pinnedPieceY == pinningPieceY) {
             // pin is coming on straight
             List<Point> possibleMoveEndSquareIndices = straightSlidingRaysToSquare(pinnedPieceX, pinnedPieceY, pinningPieceX, pinningPieceY);
+            possibleMoveEndSquareIndices.addAll(straightSlidingRaysUpToSquare(pinnedPieceX, pinnedPieceY, friendlyKingX, friendlyKingY));
 
             for (Point square: possibleMoveEndSquareIndices) {
                 legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, square.x, square.y));
@@ -158,6 +165,7 @@ public class PinMoveGenerator {
         } else {
             // pin is coming on the diagonal
             List<Point> possibleMoveEndSquareIndices = diagonalSlidingRaysToSquare(pinnedPieceX, pinnedPieceY, pinningPieceX, pinningPieceY);
+            possibleMoveEndSquareIndices.addAll(diagonalSlidingRaysUpToSquare(pinnedPieceX, pinnedPieceY, friendlyKingX, friendlyKingY));
 
             for (Point square: possibleMoveEndSquareIndices) {
                 legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, square.x, square.y));
@@ -209,16 +217,75 @@ public class PinMoveGenerator {
             for (int y = pinnedPieceY + 1; y <= pinningPieceY; y++) {
                 slidingAttackRay.add(new Point(pinnedPieceX, y));
             }
-        } else if (pinnedPieceX == pinnedPieceY && pinningPieceX > pinningPieceY) { // south
+        } else if (pinnedPieceX == pinningPieceX && pinnedPieceY > pinningPieceY) { // south
             for (int y = pinnedPieceY - 1; y >= pinningPieceY; y--) {
                 slidingAttackRay.add(new Point(pinnedPieceX, y));
             }
-        } else if (pinnedPieceX > pinnedPieceY && pinningPieceX == pinningPieceY) { // west
+        } else if (pinnedPieceX > pinningPieceX && pinnedPieceY == pinningPieceY) { // west
             for (int x = pinnedPieceX - 1; x >= pinningPieceX; x--) {
                 slidingAttackRay.add(new Point(x, pinnedPieceY));
             }
-        } else if (pinnedPieceX < pinnedPieceY && pinningPieceX == pinningPieceY) { // east
+        } else if (pinnedPieceX < pinningPieceX && pinnedPieceY == pinningPieceY) { // east
             for (int x = pinnedPieceX + 1; x <= pinningPieceX; x++) {
+                slidingAttackRay.add(new Point(x, pinnedPieceY));
+            }
+        }
+
+        return slidingAttackRay;
+    }
+
+    private List<Point> diagonalSlidingRaysUpToSquare(int pinnedPieceX, int pinnedPieceY, int pinningPieceX, int pinningPieceY) {
+        List<Point> slidingAttackRay = new ArrayList<>();
+
+        if (pinnedPieceX < pinningPieceX && pinnedPieceY < pinningPieceY) {
+            int y = pinnedPieceY + 1;
+            for (int x = pinnedPieceX + 1; x < pinningPieceX; x++) {
+                slidingAttackRay.add(new Point(x,y));
+                y++;
+            }
+
+        } else if (pinnedPieceX < pinningPieceX && pinnedPieceY > pinningPieceY) {
+            int y = pinnedPieceY - 1;
+            for (int x = pinnedPieceX + 1; x < pinningPieceX; x++) {
+                slidingAttackRay.add(new Point(x,y));
+                y--;
+            }
+
+        } else if (pinnedPieceX > pinningPieceX && pinnedPieceY < pinningPieceY) {
+            int y = pinnedPieceY + 1;
+            for (int x = pinnedPieceX - 1; x > pinningPieceX; x--) {
+                slidingAttackRay.add(new Point(x,y));
+                y++;
+            }
+
+        } else if (pinnedPieceX > pinningPieceX && pinnedPieceY > pinningPieceY) {
+            int y = pinnedPieceY - 1;
+            for (int x = pinnedPieceX - 1; x > pinningPieceX; x--) {
+                slidingAttackRay.add(new Point(x,y));
+                y--;
+            }
+        }
+
+        return slidingAttackRay;
+    }
+
+    private List<Point> straightSlidingRaysUpToSquare(int pinnedPieceX, int pinnedPieceY, int pinningPieceX, int pinningPieceY) {
+        List<Point> slidingAttackRay = new ArrayList<>();
+
+        if (pinnedPieceX == pinningPieceX && pinnedPieceY < pinningPieceY) { // north
+            for (int y = pinnedPieceY + 1; y < pinningPieceY; y++) {
+                slidingAttackRay.add(new Point(pinnedPieceX, y));
+            }
+        } else if (pinnedPieceX == pinningPieceX && pinnedPieceY > pinningPieceY) { // south
+            for (int y = pinnedPieceY - 1; y > pinningPieceY; y--) {
+                slidingAttackRay.add(new Point(pinnedPieceX, y));
+            }
+        } else if (pinnedPieceX > pinningPieceX && pinnedPieceY == pinningPieceY) { // west
+            for (int x = pinnedPieceX - 1; x > pinningPieceX; x--) {
+                slidingAttackRay.add(new Point(x, pinnedPieceY));
+            }
+        } else if (pinnedPieceX < pinningPieceX && pinnedPieceY == pinningPieceY) { // east
+            for (int x = pinnedPieceX + 1; x < pinningPieceX; x++) {
                 slidingAttackRay.add(new Point(x, pinnedPieceY));
             }
         }
