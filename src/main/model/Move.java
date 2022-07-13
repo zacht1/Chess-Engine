@@ -19,7 +19,7 @@ public class Move {
     private boolean checkmate;
 
     private boolean isWhiteMove;
-
+    private boolean computerMove;
     private MoveType moveType;
 
     /**
@@ -45,6 +45,7 @@ public class Move {
         }
 
         this.isWhiteMove = movedPiece > 0;
+        this.computerMove = false;
     }
 
     private void determineMoveType() {
@@ -65,7 +66,7 @@ public class Move {
         }
 
         // en passant
-        if (abs(movedPiece) == Piece.wPawn && capturedPiece == 0 && (startY == 5 || startY == 4) && endX != endY) {
+        if (abs(movedPiece) == 1 && capturedPiece == 0 && (startY == 5 || startY == 4) && startX != endX) {
             this.moveType = MoveType.EN_PASSANT;
         }
     }
@@ -115,6 +116,11 @@ public class Move {
             }
             return pieceChar + "x" + endCoordLetter + endY + checkSymbol;
         }
+    }
+
+    public String formatPerftMove() {
+        return Board.getChessNotation(Board.getSquareIndex(startX, startY)) +
+                Board.getChessNotation(Board.getSquareIndex(endX, endY));
     }
 
 
@@ -256,5 +262,25 @@ public class Move {
 
     public boolean isBlackRookMove() {
         return movedPiece == Piece.bRook;
+    }
+
+    public boolean isWhiteKingMove() {
+        return movedPiece == Piece.wKing;
+    }
+
+    public boolean isBlackKingMove() {
+        return movedPiece == Piece.bKing;
+    }
+
+    public void setMoveType(MoveType moveType) {
+        this.moveType = moveType;
+    }
+
+    public boolean isComputerMove() {
+        return computerMove;
+    }
+
+    public void setComputerMove(boolean computerMove) {
+        this.computerMove = computerMove;
     }
 }

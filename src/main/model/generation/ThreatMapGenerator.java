@@ -3,7 +3,8 @@ package model.generation;
 import model.Board;
 import model.Game;
 
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 // Represents a move generator which generates only pseudo-legal chess moves
 public class ThreatMapGenerator {
@@ -191,8 +192,6 @@ public class ThreatMapGenerator {
         if (startX - 1 >= 1 && startY + 1 <= 8) {
             threatMap.add(Board.getSquareIndex(startX - 1, startY + 1));
         }
-
-        // en passant
     }
 
     /**
@@ -207,8 +206,6 @@ public class ThreatMapGenerator {
         if (startX - 1 >= 1 && startY - 1 >= 1) {
             threatMap.add(Board.getSquareIndex(startX - 1, startY - 1));
         }
-
-        // en passant
     }
 
     /**

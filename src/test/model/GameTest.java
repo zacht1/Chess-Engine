@@ -41,7 +41,7 @@ public class GameTest {
 
         assertTrue(testGame.getCurrentTurn().isWhite());
 
-        assertEquals(0, testGame.getMoveList().size());
+        assertEquals(0, testGame.getBoard().getMoveList().size());
 
         assertTrue(testGame.canWhiteQueenSideCastle());
         assertTrue(testGame.canWhiteKingSideCastle());
@@ -56,14 +56,14 @@ public class GameTest {
         assertEquals(empty, testGame.getBoard().getPiece(5,2));
         assertEquals(wPawn, testGame.getBoard().getPiece(5,4));
         assertEquals(testGame.getPlayers()[1], testGame.getCurrentTurn());
-        assertEquals(testMove1, testGame.getMoveList().get(0));
+        assertEquals(testMove1, testGame.getBoard().getMoveList().get(0));
 
         Move testMove2 = new Move(testGame.getBoard(), 1,8, 1, 4);
         assertFalse(testGame.playMove(testMove2));
         assertEquals(bRook, testGame.getBoard().getPiece(1,8));
         assertEquals(empty, testGame.getBoard().getPiece(1,4));
         assertEquals(testGame.getPlayers()[1], testGame.getCurrentTurn());
-        assertEquals(1, testGame.getMoveList().size());
+        assertEquals(1, testGame.getBoard().getMoveList().size());
 
         testGame.setBoardFEN("rnbqkbnr/pppp1ppp/8/4p3/3P4/5N2/PPP1PPPP/RNBQKB1R b KQkq - 1 2");
 

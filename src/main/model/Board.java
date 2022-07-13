@@ -3,15 +3,25 @@ package model;
 import enumerations.MoveType;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Board {
     private int[] board;
+    private List<Move> moveList;
+
+    // is castling still legal
+    private boolean whiteQueenSideCastling = true;
+    private boolean whiteKingSideCastling = true;
+    private boolean blackQueenSideCastling = true;
+    private boolean blackKingSideCastling = true;
 
     /**
      * Construct a new chess board in the starting position
      */
     public Board() {
         this.board = new int[64];
+        this.moveList = new ArrayList<>();
         setBoardFEN(FenUtility.START_POS_FEN);
     }
 
@@ -22,6 +32,8 @@ public class Board {
     public void makeMove(Move move) {
         int startIndex = getSquareIndex(move.getStartX(), move.getStartY());
         int endIndex = getSquareIndex(move.getEndX(), move.getEndY());
+
+        moveList.add(move);
 
          if (move.isEnPassantMove()) {
             board[startIndex] = 0;
@@ -96,6 +108,51 @@ public class Board {
             int piece = getPiece(1, y);
             board[getSquareIndex(1, y)] = 0;
             board[getSquareIndex(4, y)] = piece;
+        }
+    }
+
+    /**
+     * Undo the given move on the current board
+     * @param move a legal chess move that was the last played move on the current board
+     */
+    public void unMakeMove(Move move) {
+        int startIndex = getSquareIndex(move.getStartX(), move.getStartY());
+        int endIndex = getSquareIndex(move.getEndX(), move.getEndY());
+
+        moveList.remove(move);
+
+        if (move.isEnPassantMove()) {
+            board[startIndex] = move.getMovedPiece();
+            board[endIndex] = Piece.empty;
+            board[getSquareIndex(move.getEndX(), move.getStartY())] = move.getCapturedPiece();
+        } else if (move.isPromotionMove()) {
+            board[startIndex] = move.getMovedPiece();
+            board[endIndex] = move.getCapturedPiece();
+        } else if (move.isKingSideCastleMove()) {
+            board[startIndex] = move.getMovedPiece();
+            board[endIndex] = Piece.empty;
+
+            if (move.getMovedPiece() > 0) { //white
+                board[getSquareIndex(8, 1)] = Piece.wRook;
+                board[getSquareIndex(6,1)] = Piece.empty;
+            } else {
+                board[getSquareIndex(8, 8)] = Piece.bRook;
+                board[getSquareIndex(6,8)] = Piece.empty;
+            }
+        } else if (move.isQueenSideCastleMove()) {
+            board[startIndex] = move.getMovedPiece();
+            board[endIndex] = Piece.empty;
+
+            if (move.getMovedPiece() > 0) { //white
+                board[getSquareIndex(1, 1)] = Piece.wRook;
+                board[getSquareIndex(4,1)] = Piece.empty;
+            } else {
+                board[getSquareIndex(1, 8)] = Piece.bRook;
+                board[getSquareIndex(4,8)] = Piece.empty;
+            }
+        } else {
+            board[startIndex] = move.getMovedPiece();
+            board[endIndex] = move.getCapturedPiece();
         }
     }
 
@@ -175,6 +232,61 @@ public class Board {
     }
 
     /**
+     * Get the index of the square given by the regular chess notation (e.g. a4, f8, h1...)
+     */
+    public static int getSquareIndexFromString(String chessNotation) {
+        char xStr = chessNotation.toCharArray()[0];
+        char yStr = chessNotation.toCharArray()[1];
+
+        int x;
+        int y;
+
+        switch (xStr) {
+            case 'a': x = 1;
+                break;
+            case 'b': x = 2;
+                break;
+            case 'c': x = 3;
+                break;
+            case 'd': x = 4;
+                break;
+            case 'e': x = 5;
+                break;
+            case 'f': x = 6;
+                break;
+            case 'g': x = 7;
+                break;
+            case 'h': x = 8;
+                break;
+            default:
+                throw new IndexOutOfBoundsException();
+        }
+
+        switch (yStr) {
+            case '1': y = 1;
+                break;
+            case '2': y = 2;
+                break;
+            case '3': y = 3;
+                break;
+            case '4': y = 4;
+                break;
+            case '5': y = 5;
+                break;
+            case '6': y = 6;
+                break;
+            case '7': y = 7;
+                break;
+            case '8': y = 8;
+                break;
+            default:
+                throw new IndexOutOfBoundsException();
+        }
+
+        return getSquareIndex(x,y);
+    }
+
+    /**
      *  Set this board to the position in the given Forsyth–Edwards Notation (FEN) string
      */
     public void setBoardFEN(String fen) {
@@ -192,5 +304,9 @@ public class Board {
 
     public void setBoard(int[] board) {
         this.board = board;
+    }
+
+    public List<Move> getMoveList() {
+        return moveList;
     }
 }

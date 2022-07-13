@@ -2,6 +2,7 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class FenUtility {
     public static final String START_POS_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
@@ -74,6 +75,55 @@ public class FenUtility {
         }
 
         game.getBoard().setBoard(newBoard);
+
+        String currentTurn = splitFEN[1];
+        if (Objects.equals(currentTurn, "w")) {
+            game.setCurrentTurn(game.getPlayers()[Game.WHITE_PLAYER_INDEX]);
+        } else if (Objects.equals(currentTurn, "b")) {
+            game.setCurrentTurn(game.getPlayers()[Game.BLACK_PLAYER_INDEX]);
+
+        }
+
+        String castlingAvailability = splitFEN[2];
+        game.setWhiteKingSideCastling(false);
+        game.setWhiteQueenSideCastling(false);
+        game.setBlackKingSideCastling(false);
+        game.setBlackQueenSideCastling(false);
+        for (char c: castlingAvailability.toCharArray()) {
+            switch (c) {
+                case 'K':
+                    game.setWhiteKingSideCastling(true);
+                    break;
+                case 'Q':
+                    game.setWhiteQueenSideCastling(true);
+                    break;
+                case 'k':
+                    game.setBlackKingSideCastling(true);
+                    break;
+                case 'q':
+                    game.setBlackQueenSideCastling(true);
+                    break;
+            }
+        }
+
+        String enPassantMove = splitFEN[3];
+        if (!Objects.equals(enPassantMove, "-")) {
+            int possibleEnPassantEndSquare = Board.getSquareIndexFromString(enPassantMove);
+            int xEnPassant = Board.getSquareCoordinates(possibleEnPassantEndSquare).x;
+            int yEnPassant = Board.getSquareCoordinates(possibleEnPassantEndSquare).y;
+
+            if (yEnPassant == 3) {
+                Move blackPawnMove = new Move(game.getBoard(), xEnPassant, yEnPassant - 1, xEnPassant, yEnPassant + 1);
+                blackPawnMove.setMovedPiece(Piece.wPawn);
+                blackPawnMove.setCapturedPiece(0);
+                game.getBoard().getMoveList().add(blackPawnMove);
+            } else if (yEnPassant == 6) {
+                Move whitePawnMove = new Move(game.getBoard(),  xEnPassant, yEnPassant + 1, xEnPassant, yEnPassant - 1);
+                whitePawnMove.setMovedPiece(Piece.bPawn);
+                whitePawnMove.setCapturedPiece(0);
+                game.getBoard().getMoveList().add(whitePawnMove);
+            }
+        }
 
         // TODO: implement for rest of the fen string
     }

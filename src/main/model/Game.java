@@ -3,28 +3,30 @@ package model;
 import enumerations.CheckStatus;
 import enumerations.GameStatus;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Game {
+    public static final int WHITE_PLAYER_INDEX = 0;
+    public static final int BLACK_PLAYER_INDEX = 1;
+
     private Board board;
     private GameStatus gameStatus;
     private CheckStatus checkStatus;
     private Player[] players;
     private Player currentTurn;
-    private List<Move> moveList;
+
+    private Map<Move, String> castlingRights;
 
     // is castling still legal
-    private boolean whiteCastling = true;
     private boolean whiteQueenSideCastling = true;
     private boolean whiteKingSideCastling = true;
-    private boolean blackCastling = true;
     private boolean blackQueenSideCastling = true;
     private boolean blackKingSideCastling = true;
 
     /**
      * Constructs a new game with a new board, a gameStatus of ACTIVE, a checkStatus of NONE, a players list of one
-     * black player and one white player, a current turn of white + human player, and an empty moveList
+     * black player and one white player, a current turn of white + human player
      */
     public Game() {
         this.board = new Board();
@@ -34,11 +36,11 @@ public class Game {
         players[0] = new Player(true);
         players[1] = new Player(false);
         this.currentTurn = players[0];
-        this.moveList = new ArrayList<>();
+        this.castlingRights = new HashMap<>();
     }
 
     /**
-     * If move is legal return true, update the board, change the currentTurn, add the move to moveList,
+     * If move is legal return true, update the board, change the currentTurn,
      * and update the gameStatus + checkStatus if necessary.  If move is false only return false
      *
      * @return true if move is legal, false otherwise
@@ -52,7 +54,19 @@ public class Game {
             return false;
         }
 
+        updateCastlingRights(move);
+
         this.board.makeMove(move);
+
+        if (move.isWhiteKingMove()) {
+            whiteQueenSideCastling = false;
+            whiteKingSideCastling = false;
+        }
+
+        if (move.isBlackKingMove()) {
+            blackQueenSideCastling = false;
+            blackKingSideCastling = false;
+        }
 
         if (move.isWhiteRookMove()) {
             whiteCastlingRights(move);
@@ -62,12 +76,31 @@ public class Game {
             blackCastlingRights(move);
         }
 
-        this.moveList.add(move);
-
         nextTurn();
-
         // TODO: checks & checkmates
         return true;
+    }
+
+    private void updateCastlingRights(Move move) {
+        String wk = "";
+        String wq = "";
+        String bk = "";
+        String bq = "";
+
+        if (whiteKingSideCastling) {
+            wk = "K";
+        }
+        if (whiteQueenSideCastling) {
+            wq = "Q";
+        }
+        if (blackKingSideCastling) {
+            bk = "k";
+        }
+        if (blackQueenSideCastling) {
+            bq = "q";
+        }
+
+        castlingRights.put(move, wk + wq + bk + bq);
     }
 
     private boolean isLegal(Move move) {
@@ -87,6 +120,42 @@ public class Game {
             blackQueenSideCastling = false;
         } else if (move.getStartX() == 8 && move.getStartY() == 8) {
             blackKingSideCastling = false;
+        }
+    }
+
+    /**
+     * Undo the given move
+     */
+    public void undoMove(Move move) {
+        this.board.unMakeMove(move);
+
+        String castleRights = castlingRights.get(move);
+
+        setWhiteKingSideCastling(false);
+        setWhiteQueenSideCastling(false);
+        setBlackKingSideCastling(false);
+        setBlackQueenSideCastling(false);
+        for (char c: castleRights.toCharArray()) {
+            switch (c) {
+                case 'K':
+                    setWhiteKingSideCastling(true);
+                    break;
+                case 'Q':
+                    setWhiteQueenSideCastling(true);
+                    break;
+                case 'k':
+                    setBlackKingSideCastling(true);
+                    break;
+                case 'q':
+                    setBlackQueenSideCastling(true);
+                    break;
+            }
+        }
+
+        if (move.isWhiteMove()) {
+            currentTurn = players[WHITE_PLAYER_INDEX];
+        } else {
+            currentTurn = players[BLACK_PLAYER_INDEX];
         }
     }
 
@@ -124,10 +193,6 @@ public class Game {
         return currentTurn;
     }
 
-    public List<Move> getMoveList() {
-        return moveList;
-    }
-
     public GameStatus getGameStatus() {
         return gameStatus;
     }
@@ -142,10 +207,6 @@ public class Game {
 
     public void setCheckStatus(CheckStatus checkStatus) {
         this.checkStatus = checkStatus;
-    }
-
-    public boolean canWhiteCastle() {
-        return whiteCastling;
     }
 
     public boolean canWhiteQueenSideCastle() {
@@ -164,10 +225,6 @@ public class Game {
         this.whiteKingSideCastling = whiteKingSideCastling;
     }
 
-    public boolean canBlackCastle() {
-        return blackCastling;
-    }
-
     public boolean canBlackQueenSideCastle() {
         return blackQueenSideCastling;
     }
@@ -182,5 +239,9 @@ public class Game {
 
     public void setBlackKingSideCastling(boolean blackKingSideCastling) {
         this.blackKingSideCastling = blackKingSideCastling;
+    }
+
+    public void setCurrentTurn(Player currentTurn) {
+        this.currentTurn = currentTurn;
     }
 }

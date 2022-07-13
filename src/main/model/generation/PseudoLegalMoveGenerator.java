@@ -96,11 +96,11 @@ public class PseudoLegalMoveGenerator {
         }
 
         // en passant
-        if (startY == 4 && game.getMoveList().get(0).getEndY() == 4 && game.getMoveList().get(0).getStartY() == 2 && game.getMoveList().get(0).getEndX() == startX - 1) {
+        if (startY == 4 && board.getMoveList().get(0).getEndY() == 4 && board.getMoveList().get(0).getStartY() == 2 && board.getMoveList().get(0).getEndX() == startX - 1) {
             pseudoLegalMoves.add(new Move(board, startX, startY, startX - 1, startY - 1));
         }
 
-        if (startY == 4 && game.getMoveList().get(0).getEndY() == 4 && game.getMoveList().get(0).getStartY() == 2 && game.getMoveList().get(0).getEndX() == startX + 1) {
+        if (startY == 4 && board.getMoveList().get(0).getEndY() == 4 && board.getMoveList().get(0).getStartY() == 2 && board.getMoveList().get(0).getEndX() == startX + 1) {
             pseudoLegalMoves.add(new Move(board, startX, startY, startX + 1, startY - 1));
         }
     }
@@ -129,12 +129,12 @@ public class PseudoLegalMoveGenerator {
         }
 
         // en passant
-        if (!game.getMoveList().isEmpty()) {
-            if (startY == 5 && game.getMoveList().get(0).getEndY() == 5 && game.getMoveList().get(0).getStartY() == 7 && game.getMoveList().get(0).getEndX() == startX - 1) {
+        if (!board.getMoveList().isEmpty()) {
+            if (startY == 5 && board.getMoveList().get(0).getEndY() == 5 && board.getMoveList().get(0).getStartY() == 7 && board.getMoveList().get(0).getEndX() == startX - 1) {
                 pseudoLegalMoves.add(new Move(board, startX, startY, startX - 1, startY + 1));
             }
 
-            if (startY == 5 && game.getMoveList().get(0).getEndY() == 5 && game.getMoveList().get(0).getStartY() == 7 && game.getMoveList().get(0).getEndX() == startX + 1) {
+            if (startY == 5 && board.getMoveList().get(0).getEndY() == 5 && board.getMoveList().get(0).getStartY() == 7 && board.getMoveList().get(0).getEndX() == startX + 1) {
                 pseudoLegalMoves.add(new Move(board, startX, startY, startX + 1, startY + 1));
             }
         }

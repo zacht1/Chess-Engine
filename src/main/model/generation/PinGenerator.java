@@ -442,7 +442,7 @@ public class PinGenerator {
         boolean attackKing = false;
 
         if (whiteToPlay) {
-            for (int y = startY - 1; y >= 8; y--) {
+            for (int y = startY - 1; y >= 1; y--) {
                 int piece = board.getPiece(startX, y);
 
                 if (piece < 0) {
@@ -460,7 +460,7 @@ public class PinGenerator {
                 }
             }
         } else {
-            for (int y = startY - 1; y >= 8; y--) {
+            for (int y = startY - 1; y >= 1; y--) {
                 int piece = board.getPiece(startX, y);
 
                 if (piece > 0) {
