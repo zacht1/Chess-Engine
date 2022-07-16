@@ -2,9 +2,14 @@ package model;
 
 import enumerations.CheckStatus;
 import enumerations.GameStatus;
+import model.generation.MoveGenerator;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static enumerations.CheckStatus.*;
+import static enumerations.GameStatus.*;
 
 public class Game {
     public static final int WHITE_PLAYER_INDEX = 0;
@@ -15,6 +20,7 @@ public class Game {
     private CheckStatus checkStatus;
     private Player[] players;
     private Player currentTurn;
+    private MoveGenerator moveGenerator;
 
     private Map<Move, String> castlingRights;
 
@@ -31,12 +37,13 @@ public class Game {
     public Game() {
         this.board = new Board();
         this.gameStatus = GameStatus.ACTIVE;
-        this.checkStatus = CheckStatus.NONE;
+        this.checkStatus = NONE;
         this.players = new Player[2];
         players[0] = new Player(true);
         players[1] = new Player(false);
         this.currentTurn = players[0];
         this.castlingRights = new HashMap<>();
+        this.moveGenerator = new MoveGenerator();
     }
 
     /**
@@ -46,11 +53,13 @@ public class Game {
      * @return true if move is legal, false otherwise
      */
     public boolean playMove(Move move) {
+        List<Move> legalMoves = moveGenerator.generateLegalMoves(this, currentTurn);
+
         if (!(move.isWhiteMove() == currentTurn.isWhite())) {
             return false;
         }
 
-        if (!isLegal(move)) {
+        if (!legalMoves.contains(move)) {
             return false;
         }
 
@@ -77,8 +86,37 @@ public class Game {
         }
 
         nextTurn();
-        // TODO: checks & checkmates
+
+        List<Move> legalOpponentMoves = moveGenerator.generateLegalMoves(this, currentTurn);
+        boolean inCheck = moveGenerator.inCheck();
+
+        updateStatus(inCheck, legalOpponentMoves);
+
         return true;
+    }
+
+    private void updateStatus(boolean inCheck, List<Move> legalMoves) {
+        if (legalMoves.isEmpty() && inCheck) {
+            if (currentTurn.isWhite()) {
+                this.gameStatus = BLACK_CHECKMATE;
+            } else {
+                this.gameStatus = WHITE_CHECKMATE;
+            }
+        } else if (legalMoves.isEmpty()) {
+            this.gameStatus = STALEMATE;
+        } else {
+            gameStatus = ACTIVE;
+        }
+
+        if (inCheck) {
+            if (currentTurn.isWhite()) {
+                this.checkStatus = WHITE_IN_CHECK;
+            } else {
+                this.checkStatus = BLACK_IN_CHECK;
+            }
+        } else {
+            checkStatus = NONE;
+        }
     }
 
     private void updateCastlingRights(Move move) {
@@ -101,10 +139,6 @@ public class Game {
         }
 
         castlingRights.put(move, wk + wq + bk + bq);
-    }
-
-    private boolean isLegal(Move move) {
-        return true; // stub
     }
 
     private void whiteCastlingRights(Move move) {

@@ -74,7 +74,7 @@ public class GameTest {
         assertEquals(testGame.getPlayers()[0], testGame.getCurrentTurn());
         assertEquals(CheckStatus.WHITE_IN_CHECK, testGame.getCheckStatus());
 
-        testGame.setBoardFEN("rnbqkbnr/1pp1ppp1/p2p3p/7Q/2B5/4P3/PPPP1PPP/RNB1K1NR w KQkq - 0 4");
+        testGame.setBoardFEN("r1bqkbnr/1pppppp1/p1n4p/7Q/2B5/4P3/PPPP1PPP/RNB1K1NR w KQkq - 2 4");
 
         Move testMove4 = new Move(testGame.getBoard(), 8, 5, 6,7);
         assertTrue(testGame.playMove(testMove4));

@@ -2,6 +2,8 @@ package model;
 
 import enumerations.MoveType;
 
+import java.util.Objects;
+
 import static java.lang.Math.abs;
 
 public class Move {
@@ -15,8 +17,8 @@ public class Move {
     private int movedPiece;
     private int capturedPiece;
 
-    private boolean check;
-    private boolean checkmate;
+    private boolean check = false;
+    private boolean checkmate = false;
 
     private boolean isWhiteMove;
     private boolean computerMove;
@@ -123,6 +125,28 @@ public class Move {
                 Board.getChessNotation(Board.getSquareIndex(endX, endY));
     }
 
+    @Override
+    public boolean equals(Object v) {
+        boolean retVal = false;
+
+        if (v instanceof Move){
+            Move move = (Move) v;
+
+            if (move.board == this.board && move.startX == this.startX && move.startY == this.startY &&
+                    move.endX == this.endX && move.endY == this.endY && move.movedPiece == this.movedPiece &&
+                    move.capturedPiece == this.capturedPiece && move.moveType == this.moveType &&
+                    move.isWhiteMove == this.isWhiteMove) {
+                retVal = true;
+            }
+        }
+
+        return retVal;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board, startX, startY, endX, endY, movedPiece, capturedPiece, check, checkmate, isWhiteMove, computerMove, moveType);
+    }
 
     /**
      * Getters & Setters
