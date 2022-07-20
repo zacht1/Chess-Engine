@@ -49,7 +49,7 @@ public class Board {
         }
     }
 
-    private void makePromotionMove(Move move, int startIndex, int endIndex) {
+    public void makePromotionMove(Move move, int startIndex, int endIndex) {
         board[startIndex] = 0;
         int piece;
 

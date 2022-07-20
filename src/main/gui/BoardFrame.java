@@ -28,27 +28,18 @@ public class BoardFrame extends JPanel {
     private Game game;
     private JFrame gameFrame;
 
+    /**
+     * Initialize the BoardFrame of the given game and with the given game frame
+     */
     public BoardFrame(Game game, JFrame gameFrame) {
-        super(new BorderLayout());
-
-        this.game = game;
-        this.gameFrame = gameFrame;
-        this.setBackground(DARK_SQUARE_COLOUR);
-
-        initializeBoardLayeredPane();
-        initializeSquares();
-        initializePieces();
-    }
-
-    private void initializeBoardLayeredPane() {
         // stub
     }
 
-    private void initializeSquares() {
+    private void initSquares() {
         // stub
     }
 
-    private void initializePieces() {
+    private void initPieces() {
         // stub
     }
 }
