@@ -22,6 +22,7 @@ public class Move {
 
     private boolean isWhiteMove;
     private boolean computerMove;
+    private boolean isPromotionMove = false;
     private MoveType moveType;
 
     /**
@@ -70,6 +71,11 @@ public class Move {
         // en passant
         if (abs(movedPiece) == 1 && capturedPiece == 0 && (startY == 5 || startY == 4) && startX != endX) {
             this.moveType = MoveType.EN_PASSANT;
+        }
+
+        // promotion move
+        if ((movedPiece == Piece.wPawn && endY == 8) || (movedPiece == Piece.bPawn && endY == 1)) {
+            isPromotionMove = true;
         }
     }
 
@@ -188,7 +194,7 @@ public class Move {
     }
 
     public boolean isPromotionMove() {
-        return this.moveType == MoveType.BISHOP_PROMOTION || this.moveType == MoveType.KNIGHT_PROMOTION ||
+        return this.isPromotionMove || this.moveType == MoveType.BISHOP_PROMOTION || this.moveType == MoveType.KNIGHT_PROMOTION ||
                 this.moveType == MoveType.QUEEN_PROMOTION || this.moveType == MoveType.ROOK_PROMOTION;
     }
 
@@ -306,5 +312,9 @@ public class Move {
 
     public void setComputerMove(boolean computerMove) {
         this.computerMove = computerMove;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

@@ -1,5 +1,8 @@
 package model;
 
+import enumerations.CheckStatus;
+import model.generation.MoveGenerator;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -122,6 +125,16 @@ public class FenUtility {
                 whitePawnMove.setMovedPiece(Piece.bPawn);
                 whitePawnMove.setCapturedPiece(0);
                 game.getBoard().getMoveList().add(whitePawnMove);
+            }
+        }
+
+        MoveGenerator moveGenerator = new MoveGenerator();
+        moveGenerator.generateLegalMoves(game, game.getCurrentTurn());
+        if (moveGenerator.inCheck()) {
+            if (game.getCurrentTurn().isWhite()) {
+                game.setCheckStatus(CheckStatus.WHITE_IN_CHECK);
+            } else {
+                game.setCheckStatus(CheckStatus.BLACK_IN_CHECK);
             }
         }
 

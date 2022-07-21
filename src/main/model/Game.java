@@ -24,6 +24,8 @@ public class Game {
 
     private Map<Move, String> castlingRights;
 
+    private boolean flippedBoard;
+
     // is castling still legal
     private boolean whiteQueenSideCastling = true;
     private boolean whiteKingSideCastling = true;
@@ -44,6 +46,7 @@ public class Game {
         this.currentTurn = players[0];
         this.castlingRights = new HashMap<>();
         this.moveGenerator = new MoveGenerator();
+        this.flippedBoard = false;
     }
 
     /**
@@ -277,5 +280,13 @@ public class Game {
 
     public void setCurrentTurn(Player currentTurn) {
         this.currentTurn = currentTurn;
+    }
+
+    public void setFlippedBoard(boolean flippedBoard) {
+        this.flippedBoard = flippedBoard;
+    }
+
+    public boolean isFlippedBoard() {
+        return flippedBoard;
     }
 }
