@@ -7,6 +7,7 @@ import model.generation.MoveGenerator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import static enumerations.CheckStatus.*;
 import static enumerations.GameStatus.*;
@@ -42,7 +43,9 @@ public class Game {
         this.checkStatus = NONE;
         this.players = new Player[2];
         players[0] = new Player(true);
-        players[1] = new Player(false);
+        Player blackPlayer = new Player(false);
+        blackPlayer.setHuman(false);
+        players[1] = blackPlayer;
         this.currentTurn = players[0];
         this.castlingRights = new HashMap<>();
         this.moveGenerator = new MoveGenerator();
@@ -158,6 +161,21 @@ public class Game {
         } else if (move.getStartX() == 8 && move.getStartY() == 8) {
             blackKingSideCastling = false;
         }
+    }
+
+    /**
+     * Play a computer generated move on the chess board
+     */
+    public Move playComputerMove() {
+        List<Move> moves = moveGenerator.generateLegalMoves(this, this.currentTurn);
+
+        Random random = new Random();
+        int index = random.nextInt(moves.size());
+        Move move = moves.get(index);
+
+        playMove(move);
+
+        return move;
     }
 
     /**

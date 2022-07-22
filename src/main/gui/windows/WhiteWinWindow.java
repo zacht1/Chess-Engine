@@ -42,8 +42,8 @@ public class WhiteWinWindow extends JFrame implements ActionListener {
 
     private void setupButtons() {
         closeButton = new JButton();
-        closeButton.setIcon(new FlatSVGIcon("main/images/close.svg"));
-        closeButton.setSelectedIcon(new FlatSVGIcon("main/images/close_selected.svg"));
+        closeButton.setIcon(new FlatSVGIcon("images/close.svg"));
+        closeButton.setSelectedIcon(new FlatSVGIcon("images/close_selected.svg"));
         closeButton.setBounds(211,2,17, 17);
         closeButton.addActionListener(this);
         closeButton.setFocusable(false);

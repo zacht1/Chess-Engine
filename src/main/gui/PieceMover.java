@@ -105,7 +105,9 @@ public class PieceMover implements MouseListener, MouseMotionListener {
         }
     }
 
-    // return coordinates on board from point on panel
+    /**
+     * Return coordinates on board from point on panel
+     */
     public Point getCoordinate(MouseEvent e) {
         int x = 1 + e.getPoint().x / BoardFrame.SQUARE_DIMENSION;
         int y = 8 - e.getPoint().y / BoardFrame.SQUARE_DIMENSION;
@@ -113,7 +115,9 @@ public class PieceMover implements MouseListener, MouseMotionListener {
         return new Point(x,y);
     }
 
-    // highlight the square if it should be highlighted
+    /**
+     * Highlight the square if it should be highlighted
+     */
     private void highlightSquare(Point pressedPoint) {
         int piece = boardPanel.getGame().getBoard().getPiece(pressedPoint.x, pressedPoint.y);
         Player currentTurn = boardPanel.getGame().getCurrentTurn();
@@ -135,7 +139,9 @@ public class PieceMover implements MouseListener, MouseMotionListener {
         }
     }
 
-    // highlight the origin and destination square of the move that was just played
+    /**
+     * Highlight the origin and destination square of the move that was just played
+     */
     private void highlightMove(Point originPoint, Point endPoint) {
         if (previousOriginPoint != null && previousEndPoint != null) {
             // remove highlighting of the previous move

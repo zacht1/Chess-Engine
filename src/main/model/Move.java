@@ -2,6 +2,7 @@ package model;
 
 import enumerations.MoveType;
 
+import java.awt.*;
 import java.util.Objects;
 
 import static java.lang.Math.abs;
@@ -316,5 +317,13 @@ public class Move {
 
     public Board getBoard() {
         return board;
+    }
+
+    public Point getStartPoint() {
+        return new Point(startX, startY);
+    }
+
+    public Point getEndPoint() {
+        return new Point(endX, endY);
     }
 }

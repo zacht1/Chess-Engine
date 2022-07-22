@@ -39,8 +39,8 @@ public class BoardFrame extends JPanel {
     private Map<JPanel, Integer> pieceMap;
     private Map<Integer, JPanel> kingPanelMap;
 
-    private Game game;
-    private JFrame gameFrame;
+    private final Game game;
+    private final JFrame gameFrame;
 
     /**
      * Initialize the BoardFrame of the given game and with the given game frame
@@ -252,7 +252,6 @@ public class BoardFrame extends JPanel {
         // TODO: implement
     }
 
-
     /**
      * If the move with the given originPoint and destinationPoint is legal on the current board make the move
      *
@@ -280,7 +279,8 @@ public class BoardFrame extends JPanel {
         }
 
         if (game.playMove(move)) {
-            return executeMove(move, originPanel, destinationPanel);
+            executeMove(move, originPanel, destinationPanel);
+            return true;
         } else {
             return false;
         }
@@ -291,15 +291,12 @@ public class BoardFrame extends JPanel {
      *
      * @param originPanel starting panel of the given move
      * @param endPanel destination panel of the given move
-     * @return true if the move is played, false otherwise
      */
-    private boolean executeMove(Move move, JPanel originPanel, JPanel endPanel) {
+    private void executeMove(Move move, JPanel originPanel, JPanel endPanel) {
         if (move.isQueenSideCastleMove()) {
             makeQueenSideCastleMove(move, originPanel, endPanel, move.getStartY());
         } else if (move.isKingSideCastleMove()) {
             makeKingSideCastleMove(move, originPanel, endPanel, move.getStartY());
-        } else if (move.isPromotionMove()) {
-            requestPromotionMove(move, originPanel, endPanel);
         } else if (move.isEnPassantMove()) {
             makeEnPassantMove(move, originPanel, endPanel);
         } else {
@@ -316,6 +313,7 @@ public class BoardFrame extends JPanel {
             pieceMap.remove(originPanel, move.getMovedPiece());
             pieceMap.put(originPanel, 0);
             pieceMap.remove(endPanel, move.getCapturedPiece());
+
             pieceMap.put(endPanel, move.getMovedPiece());
 
             if (abs(move.getMovedPiece()) == Piece.wKing) {
@@ -339,7 +337,29 @@ public class BoardFrame extends JPanel {
             new BlackWinWindow(game);
         }
 
-        return true;
+        SwingWorker swingWorker = new SwingWorker() {
+            @Override
+            protected Move doInBackground() {
+                sleep();
+                return playComputerMove();
+            }
+        };
+
+        if (!game.getCurrentTurn().isHuman()) {
+            swingWorker.execute();
+        }
+
+        this.revalidate();
+        this.repaint();
+        this.setVisible(true);
+    }
+
+    private void sleep() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private boolean requestPromotionMove(Move move, JPanel originPanel, JPanel endPanel) {
@@ -350,7 +370,7 @@ public class BoardFrame extends JPanel {
         originPanel.repaint();
         originPanel.revalidate();
 
-        if (game.getCurrentTurn().isWhite()) { // TODO: might be wrong
+        if (game.getCurrentTurn().isWhite()) {
             wpw = new WhitePromotionWindow(move, gameFrame, endPanel.getLocationOnScreen().x,
                     endPanel.getLocationOnScreen().y);
         } else {
@@ -596,6 +616,41 @@ public class BoardFrame extends JPanel {
 
         pieceMap.remove(endRookPanel, 0);
         pieceMap.put(endRookPanel, rook);
+    }
+
+    public Move playComputerMove() {
+        Move move = game.playComputerMove();
+        JPanel originPanel = getPanel(move.getStartPoint());
+        JPanel endPanel = getPanel(move.getEndPoint());
+
+        if (move.isPromotionMove()) {
+            makePromotionMove(move, originPanel, endPanel);
+        } else {
+            executeMove(move, originPanel, endPanel);
+        }
+
+        this.repaint();
+        this.revalidate();
+        this.setVisible(true);
+
+        JPanel ePanel = getPanel(move.getEndPoint());
+        JPanel sPanel = getPanel(move.getStartPoint());
+
+        ePanel.repaint();
+        ePanel.revalidate();
+        ePanel.setVisible(true);
+
+        sPanel.repaint();
+        sPanel.revalidate();
+        sPanel.setVisible(true);
+
+        JLabel l = (JLabel) ePanel.getComponent(0);
+
+        l.revalidate();
+        l.repaint();
+        l.setVisible(true);
+
+        return move;
     }
 
     /**

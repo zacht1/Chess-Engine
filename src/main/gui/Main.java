@@ -9,7 +9,7 @@ public class Main {
         FlatSolarizedLightIJTheme.setup();
 
         Game game = new Game();
-        //game.setBoardFEN("8/1PPPB1P1/8/6k1/1K6/7r/1p2ppp1/8 b - - 0 1");
+        //game.setBoardFEN("7k/R7/1K4R1/8/8/8/p2pp2p/r7 w - - 0 1");
 
         new GameWindow(game);
     }

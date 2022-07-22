@@ -835,4 +835,8 @@ public class MoveGenerator {
     public boolean doPinsExistInPosition() {
         return pinsExistInPosition;
     }
+
+    public List<Move> getLegalMoves() {
+        return legalMoves;
+    }
 }
