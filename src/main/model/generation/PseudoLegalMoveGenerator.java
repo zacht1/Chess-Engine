@@ -78,30 +78,30 @@ public class PseudoLegalMoveGenerator {
     private void generateBlackPawnMoves(int startX, int startY) {
         // 1 square move
         if (startY - 1 >= 1 && board.getPiece(startX, startY - 1) == 0) {
-            pseudoLegalMoves.add(new Move(board, startX, startY, startX, startY - 1));
+            pseudoLegalMoves.add(new Move(game, startX, startY, startX, startY - 1));
         }
 
         // 2 square move
         if (startY == 7 && board.getPiece(startX, startY - 1) == 0 && board.getPiece(startX, startY - 2) == 0) {
-            pseudoLegalMoves.add(new Move(board, startX, startY, startX, startY - 2));
+            pseudoLegalMoves.add(new Move(game, startX, startY, startX, startY - 2));
         }
 
         // captures
         if (startX - 1 >= 1 && startY - 1 >= 1 && board.getPiece(startX - 1, startY - 1) > 0) {
-            pseudoLegalMoves.add(new Move(board, startX, startY, startX - 1, startY - 1));
+            pseudoLegalMoves.add(new Move(game, startX, startY, startX - 1, startY - 1));
         }
 
         if (startX + 1 <= 8 && startY - 1 >= 1 && board.getPiece(startX + 1, startY - 1) > 0) {
-            pseudoLegalMoves.add(new Move(board, startX, startY, startX + 1, startY - 1));
+            pseudoLegalMoves.add(new Move(game, startX, startY, startX + 1, startY - 1));
         }
 
         // en passant
         if (startY == 4 && board.getMoveList().get(0).getEndY() == 4 && board.getMoveList().get(0).getStartY() == 2 && board.getMoveList().get(0).getEndX() == startX - 1) {
-            pseudoLegalMoves.add(new Move(board, startX, startY, startX - 1, startY - 1));
+            pseudoLegalMoves.add(new Move(game, startX, startY, startX - 1, startY - 1));
         }
 
         if (startY == 4 && board.getMoveList().get(0).getEndY() == 4 && board.getMoveList().get(0).getStartY() == 2 && board.getMoveList().get(0).getEndX() == startX + 1) {
-            pseudoLegalMoves.add(new Move(board, startX, startY, startX + 1, startY - 1));
+            pseudoLegalMoves.add(new Move(game, startX, startY, startX + 1, startY - 1));
         }
     }
 
@@ -111,31 +111,31 @@ public class PseudoLegalMoveGenerator {
     private void generateWhitePawnMoves(int startX, int startY) {
         // 1 square move
         if (startY + 1 <= 8 && board.getPiece(startX, startY + 1) == 0) {
-            pseudoLegalMoves.add(new Move(board, startX, startY, startX, startY + 1));
+            pseudoLegalMoves.add(new Move(game, startX, startY, startX, startY + 1));
         }
 
         // 2 square move
         if (startY == 2 && board.getPiece(startX, startY + 1) == 0 && board.getPiece(startX, startY + 2) == 0) {
-            pseudoLegalMoves.add(new Move(board, startX, startY, startX, startY + 2));
+            pseudoLegalMoves.add(new Move(game, startX, startY, startX, startY + 2));
         }
 
         // captures
         if (startX + 1 <= 8 && startY + 1 <= 8 && board.getPiece(startX + 1, startY + 1) < 0) {
-            pseudoLegalMoves.add(new Move(board, startX, startY, startX + 1, startY + 1));
+            pseudoLegalMoves.add(new Move(game, startX, startY, startX + 1, startY + 1));
         }
 
         if (startX - 1 >= 1 && startY + 1 <= 8 && board.getPiece(startX - 1, startY + 1) < 0) {
-            pseudoLegalMoves.add(new Move(board, startX, startY, startX - 1, startY + 1));
+            pseudoLegalMoves.add(new Move(game, startX, startY, startX - 1, startY + 1));
         }
 
         // en passant
         if (!board.getMoveList().isEmpty()) {
             if (startY == 5 && board.getMoveList().get(0).getEndY() == 5 && board.getMoveList().get(0).getStartY() == 7 && board.getMoveList().get(0).getEndX() == startX - 1) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX - 1, startY + 1));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX - 1, startY + 1));
             }
 
             if (startY == 5 && board.getMoveList().get(0).getEndY() == 5 && board.getMoveList().get(0).getStartY() == 7 && board.getMoveList().get(0).getEndX() == startX + 1) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX + 1, startY + 1));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX + 1, startY + 1));
             }
         }
     }
@@ -149,7 +149,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX + 1, startY + 2);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX + 1, startY + 2));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX + 1, startY + 2));
             }
         }
 
@@ -157,7 +157,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX + 2, startY + 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX + 2, startY + 1));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX + 2, startY + 1));
             }
         }
 
@@ -165,7 +165,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX - 1, startY + 2);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX - 1, startY + 2));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX - 1, startY + 2));
             }
         }
 
@@ -173,7 +173,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX - 2, startY + 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX - 2, startY + 1));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX - 2, startY + 1));
             }
         }
 
@@ -181,7 +181,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX - 2, startY - 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX - 2, startY - 1));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX - 2, startY - 1));
             }
         }
 
@@ -189,7 +189,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX - 1, startY - 2);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX - 1, startY - 2));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX - 1, startY - 2));
             }
         }
 
@@ -197,7 +197,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX + 1, startY - 2);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX + 1, startY - 2));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX + 1, startY - 2));
             }
         }
 
@@ -205,7 +205,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX + 2, startY - 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX + 2, startY - 1));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX + 2, startY - 1));
             }
         }
     }
@@ -256,7 +256,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX, startY + 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX, startY + 1));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX, startY + 1));
             }
         }
 
@@ -265,7 +265,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX, startY - 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX, startY - 1));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX, startY - 1));
             }
         }
 
@@ -274,7 +274,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX - 1, startY);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX - 1, startY));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX - 1, startY));
             }
         }
 
@@ -283,7 +283,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX + 1, startY);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX + 1, startY));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX + 1, startY));
             }
         }
 
@@ -292,7 +292,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX - 1, startY + 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX - 1, startY + 1));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX - 1, startY + 1));
             }
         }
 
@@ -301,7 +301,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX + 1, startY + 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX + 1, startY + 1));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX + 1, startY + 1));
             }
         }
 
@@ -310,7 +310,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX - 1, startY - 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX - 1, startY - 1));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX - 1, startY - 1));
             }
         }
 
@@ -319,7 +319,7 @@ public class PseudoLegalMoveGenerator {
             int capturedPiece = board.getPiece(startX + 1, startY - 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX + 1, startY - 1));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX + 1, startY - 1));
             }
         }
     }
@@ -331,9 +331,9 @@ public class PseudoLegalMoveGenerator {
     private void generateNorthMoves(int startX, int startY) {
         for (int y = startY + 1; y <= 8; y++) {
             if (board.getPiece(startX, y) == 0) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX, y));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX, y));
             } else if (board.getPiece(startX, y) < 0 && whiteToPlay || board.getPiece(startX, y) > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX, y));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX, y));
                 break;
             } else {
                 break;
@@ -344,9 +344,9 @@ public class PseudoLegalMoveGenerator {
     private void generateSouthMoves(int startX, int startY) {
         for (int y = startY - 1; y >= 1; y--) {
             if (board.getPiece(startX, y) == 0) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX, y));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX, y));
             } else if (board.getPiece(startX, y) < 0 && whiteToPlay || board.getPiece(startX, y) > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, startX, y));
+                pseudoLegalMoves.add(new Move(game, startX, startY, startX, y));
                 break;
             } else {
                 break;
@@ -357,9 +357,9 @@ public class PseudoLegalMoveGenerator {
     private void generateWestMoves(int startX, int startY) {
         for (int x = startX - 1; x >= 1; x--) {
             if (board.getPiece(x, startY) == 0) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, x, startY));
+                pseudoLegalMoves.add(new Move(game, startX, startY, x, startY));
             } else if (board.getPiece(x, startY) < 0 && whiteToPlay || board.getPiece(x, startY) > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, x, startY));
+                pseudoLegalMoves.add(new Move(game, startX, startY, x, startY));
                 break;
             }  else {
                 break;
@@ -370,9 +370,9 @@ public class PseudoLegalMoveGenerator {
     private void generateEastMoves(int startX, int startY) {
         for (int x = startX + 1; x <= 8; x++) {
             if (board.getPiece(x, startY) == 0) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, x, startY));
+                pseudoLegalMoves.add(new Move(game, startX, startY, x, startY));
             } else if (board.getPiece(x, startY) < 0 && whiteToPlay || board.getPiece(x, startY) > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, x, startY));
+                pseudoLegalMoves.add(new Move(game, startX, startY, x, startY));
                 break;
             }  else {
                 break;
@@ -389,9 +389,9 @@ public class PseudoLegalMoveGenerator {
             }
 
             if (board.getPiece(x, y) == 0) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, x, y));
+                pseudoLegalMoves.add(new Move(game, startX, startY, x, y));
             } else if (board.getPiece(x, y) < 0 && whiteToPlay || board.getPiece(x,y) > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, x, y));
+                pseudoLegalMoves.add(new Move(game, startX, startY, x, y));
                 break;
             } else {
                 break;
@@ -410,9 +410,9 @@ public class PseudoLegalMoveGenerator {
             }
 
             if (board.getPiece(x, y) == 0) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, x, y));
+                pseudoLegalMoves.add(new Move(game, startX, startY, x, y));
             } else if (board.getPiece(x, y) < 0 && whiteToPlay || board.getPiece(x,y) > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, x, y));
+                pseudoLegalMoves.add(new Move(game, startX, startY, x, y));
                 break;
             } else {
                 break;
@@ -431,9 +431,9 @@ public class PseudoLegalMoveGenerator {
             }
 
             if (board.getPiece(x, y) == 0) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, x, y));
+                pseudoLegalMoves.add(new Move(game, startX, startY, x, y));
             } else if (board.getPiece(x, y) < 0 && whiteToPlay || board.getPiece(x,y) > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, x, y));
+                pseudoLegalMoves.add(new Move(game, startX, startY, x, y));
                 break;
             } else {
                 break;
@@ -452,9 +452,9 @@ public class PseudoLegalMoveGenerator {
             }
 
             if (board.getPiece(x, y) == 0) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, x, y));
+                pseudoLegalMoves.add(new Move(game, startX, startY, x, y));
             } else if (board.getPiece(x, y) < 0 && whiteToPlay || board.getPiece(x,y) > 0 && !whiteToPlay) {
-                pseudoLegalMoves.add(new Move(board, startX, startY, x, y));
+                pseudoLegalMoves.add(new Move(game, startX, startY, x, y));
                 break;
             } else {
                 break;

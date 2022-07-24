@@ -272,7 +272,7 @@ public class BoardFrame extends JPanel {
         int x2 = Board.getSquareCoordinates(endPanelIndex).x;
         int y2 = Board.getSquareCoordinates(endPanelIndex).y;
 
-        Move move = new Move(game.getBoard(), x1, y1, x2, y2);
+        Move move = new Move(game, x1, y1, x2, y2);
 
         if (move.isPromotionMove() && Piece.isLegalPawnMove(move)) {
             return requestPromotionMove(move, originPanel, destinationPanel);
@@ -340,7 +340,7 @@ public class BoardFrame extends JPanel {
         SwingWorker swingWorker = new SwingWorker() {
             @Override
             protected Move doInBackground() {
-                sleep();
+                sleep(500);
                 return playComputerMove();
             }
         };
@@ -354,9 +354,12 @@ public class BoardFrame extends JPanel {
         this.setVisible(true);
     }
 
-    private void sleep() {
+    /**
+     * Sleep the current thread for the given amount of milliseconds
+     */
+    private void sleep(int millis) {
         try {
-            Thread.sleep(500);
+            Thread.sleep(millis);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
@@ -618,6 +621,9 @@ public class BoardFrame extends JPanel {
         pieceMap.put(endRookPanel, rook);
     }
 
+    /**
+     * Generate a computer move and play it on the board
+     */
     public Move playComputerMove() {
         Move move = game.playComputerMove();
         JPanel originPanel = getPanel(move.getStartPoint());

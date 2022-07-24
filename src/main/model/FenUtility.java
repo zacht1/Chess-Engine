@@ -116,12 +116,12 @@ public class FenUtility {
             int yEnPassant = Board.getSquareCoordinates(possibleEnPassantEndSquare).y;
 
             if (yEnPassant == 3) {
-                Move blackPawnMove = new Move(game.getBoard(), xEnPassant, yEnPassant - 1, xEnPassant, yEnPassant + 1);
+                Move blackPawnMove = new Move(game, xEnPassant, yEnPassant - 1, xEnPassant, yEnPassant + 1);
                 blackPawnMove.setMovedPiece(Piece.wPawn);
                 blackPawnMove.setCapturedPiece(0);
                 game.getBoard().getMoveList().add(blackPawnMove);
             } else if (yEnPassant == 6) {
-                Move whitePawnMove = new Move(game.getBoard(),  xEnPassant, yEnPassant + 1, xEnPassant, yEnPassant - 1);
+                Move whitePawnMove = new Move(game,  xEnPassant, yEnPassant + 1, xEnPassant, yEnPassant - 1);
                 whitePawnMove.setMovedPiece(Piece.bPawn);
                 whitePawnMove.setCapturedPiece(0);
                 game.getBoard().getMoveList().add(whitePawnMove);

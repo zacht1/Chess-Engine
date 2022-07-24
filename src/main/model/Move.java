@@ -9,6 +9,7 @@ import static java.lang.Math.abs;
 
 public class Move {
     private Board board;
+    private Game game;
 
     private int startX;
     private int startY;
@@ -25,14 +26,16 @@ public class Move {
     private boolean computerMove;
     private boolean isPromotionMove = false;
     private MoveType moveType;
+    private String castlingRights; // castling rights on the board prior to the playing of this move
 
     /**
      * Constructs a new chess move with the specified starting square, ending square, move piece, and captured piece
      * Call helper methods to determine move type
      * Move may or may not be legal
      */
-    public Move(Board board, int startX, int startY, int endX, int endY) {
-        this.board = board;
+    public Move(Game game, int startX, int startY, int endX, int endY) {
+        this.game = game;
+        this.board = game.getBoard();
         this.startX = startX;
         this.startY = startY;
         this.endX = endX;
@@ -43,6 +46,7 @@ public class Move {
 
         this.moveType = MoveType.NORMAL;
         determineMoveType();
+        determineCastlingRights();
 
         if (moveType == MoveType.EN_PASSANT) {
             this.capturedPiece = board.getPiece(endX, startY);
@@ -50,6 +54,28 @@ public class Move {
 
         this.isWhiteMove = movedPiece > 0;
         this.computerMove = false;
+    }
+
+    private void determineCastlingRights() {
+        String wk = "";
+        String wq = "";
+        String bk = "";
+        String bq = "";
+
+        if (game.canWhiteKingSideCastle()) {
+            wk = "K";
+        }
+        if (game.canWhiteQueenSideCastle()) {
+            wq = "Q";
+        }
+        if (game.canBlackKingSideCastle()) {
+            bk = "k";
+        }
+        if (game.canBlackQueenSideCastle()) {
+            bq = "q";
+        }
+
+        this.castlingRights = wk + wq + bk + bq;
     }
 
     private void determineMoveType() {
@@ -325,5 +351,9 @@ public class Move {
 
     public Point getEndPoint() {
         return new Point(endX, endY);
+    }
+
+    public String getCastlingRights() {
+        return castlingRights;
     }
 }

@@ -38,18 +38,18 @@ public class PinMoveGenerator {
         if (pinnedPieceX == pinningPieceX) { // piece is pinned on the vertical and piece can move
             // 1 square move
             if (pinnedPieceY - 1 >= 1 && board.getPiece(pinnedPieceX, pinnedPieceY - 1) == 0) {
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX, pinnedPieceY - 1));
+                legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, pinnedPieceX, pinnedPieceY - 1));
             }
             // 2 square move
             if (pinnedPieceY == 7 && board.getPiece(pinnedPieceX, pinnedPieceY - 1) == 0 && board.getPiece(pinnedPieceX, pinnedPieceY - 2) == 0) {
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX, pinnedPieceY - 2));
+                legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, pinnedPieceX, pinnedPieceY - 2));
             }
 
         } else { // piece is pinned on the diagonal
             if (pinnedPieceIndex - 9 == pinningPieceIndex) { // pinning piece is capturable to the left of pinned pawn
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX - 1, pinnedPieceY - 1));
+                legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, pinnedPieceX - 1, pinnedPieceY - 1));
             } else if (pinnedPieceIndex - 7 == pinningPieceIndex) { // pinning piece is capturable to the right of pinned pawn
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX + 1, pinnedPieceY + 1));
+                legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, pinnedPieceX + 1, pinnedPieceY + 1));
             }
 
             // en passant moves
@@ -62,7 +62,7 @@ public class PinMoveGenerator {
                     if (pinnedPieceY == 4 && moves.get(mostRecent).getMovedPiece() == Piece.wPawn && moves.get(mostRecent).getEndY() == 4 &&
                             moves.get(mostRecent).getStartY() == 2 && moves.get(mostRecent).getEndX() == pinnedPieceX + 1 &&
                             legalBlackEnPassant(pinnedPieceX, pinnedPieceY, pinnedPieceX + 1, pinnedPieceY)) {
-                        legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX + 1, pinnedPieceY + 1));
+                        legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, pinnedPieceX + 1, pinnedPieceY + 1));
                     }
 
                 } else if ((pinnedPieceX < pinningPieceX && pinnedPieceY < pinningPieceY) ||
@@ -70,7 +70,7 @@ public class PinMoveGenerator {
                     if (pinnedPieceY == 4 && moves.get(mostRecent).getMovedPiece() == Piece.wPawn && moves.get(mostRecent).getEndY() == 4 &&
                             moves.get(mostRecent).getStartY() == 2 && moves.get(mostRecent).getEndX() == pinnedPieceX - 1 &&
                             legalBlackEnPassant(pinnedPieceX, pinnedPieceY, pinnedPieceX - 1, pinnedPieceY)) {
-                        legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX - 1, pinnedPieceY + 1));
+                        legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, pinnedPieceX - 1, pinnedPieceY + 1));
                     }
                 }
             }
@@ -127,18 +127,18 @@ public class PinMoveGenerator {
 
         if (pinnedPieceX == pinningPieceX) { // piece is pinned on the vertical and piece can move
             if (pinnedPieceY + 1 <= 8 && board.getPiece(pinnedPieceX, pinnedPieceY + 1) == 0) {
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX, pinnedPieceY + 1));
+                legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, pinnedPieceX, pinnedPieceY + 1));
             }
 
             // 2 square move
             if (pinnedPieceY == 2 && board.getPiece(pinnedPieceX, pinnedPieceY + 1) == 0 && board.getPiece(pinningPieceX, pinnedPieceY + 2) == 0) {
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX, pinnedPieceY + 2));
+                legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, pinnedPieceX, pinnedPieceY + 2));
             }
         } else { // piece is pinned on the diagonal
             if (pinnedPieceIndex + 9 == pinningPieceIndex) { // pinning piece is capturable to the right of pinned pawn
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX + 1, pinnedPieceY + 1));
+                legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, pinnedPieceX + 1, pinnedPieceY + 1));
             } else if (pinnedPieceIndex + 7 == pinningPieceIndex) { // pinning piece is capturable to the left of pinned pawn
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX - 1, pinnedPieceY + 1));
+                legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, pinnedPieceX - 1, pinnedPieceY + 1));
             }
 
             // en passant moves
@@ -152,7 +152,7 @@ public class PinMoveGenerator {
                     if (pinnedPieceY == 5 && moves.get(mostRecent).getMovedPiece() == Piece.bPawn && moves.get(mostRecent).getEndY() == 5 &&
                             moves.get(mostRecent).getStartY() == 7 && moves.get(mostRecent).getEndX() == pinnedPieceX + 1 &&
                             legalWhiteEnPassant(pinnedPieceX, pinnedPieceY, pinnedPieceX + 1, pinnedPieceY)) {
-                        legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX + 1, pinnedPieceY + 1));
+                        legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, pinnedPieceX + 1, pinnedPieceY + 1));
                     }
 
                 } else if ((pinnedPieceX < pinningPieceX && pinnedPieceY > pinningPieceY) ||
@@ -160,7 +160,7 @@ public class PinMoveGenerator {
                     if (pinnedPieceY == 5 && moves.get(mostRecent).getMovedPiece() == Piece.bPawn && moves.get(mostRecent).getEndY() == 5 &&
                             moves.get(mostRecent).getStartY() == 7 && moves.get(mostRecent).getEndX() == pinnedPieceX - 1 &&
                             legalWhiteEnPassant(pinnedPieceX, pinnedPieceY, pinnedPieceX - 1, pinnedPieceY)) {
-                        legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, pinnedPieceX - 1, pinnedPieceY + 1));
+                        legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, pinnedPieceX - 1, pinnedPieceY + 1));
                     }
                 }
             }
@@ -226,7 +226,7 @@ public class PinMoveGenerator {
             possibleMoveEndSquareIndices.addAll(diagonalSlidingRaysUpToSquare(pinnedPieceX, pinnedPieceY, friendlyKingX, friendlyKingY));
 
             for (Point square: possibleMoveEndSquareIndices) {
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, square.x, square.y));
+                legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, square.x, square.y));
             }
         }
 
@@ -253,7 +253,7 @@ public class PinMoveGenerator {
             possibleMoveEndSquareIndices.addAll(straightSlidingRaysUpToSquare(pinnedPieceX, pinnedPieceY, friendlyKingX, friendlyKingY));
 
             for (Point square: possibleMoveEndSquareIndices) {
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, square.x, square.y));
+                legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, square.x, square.y));
             }
         }
 
@@ -280,7 +280,7 @@ public class PinMoveGenerator {
             possibleMoveEndSquareIndices.addAll(straightSlidingRaysUpToSquare(pinnedPieceX, pinnedPieceY, friendlyKingX, friendlyKingY));
 
             for (Point square: possibleMoveEndSquareIndices) {
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, square.x, square.y));
+                legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, square.x, square.y));
             }
         } else {
             // pin is coming on the diagonal
@@ -288,7 +288,7 @@ public class PinMoveGenerator {
             possibleMoveEndSquareIndices.addAll(diagonalSlidingRaysUpToSquare(pinnedPieceX, pinnedPieceY, friendlyKingX, friendlyKingY));
 
             for (Point square: possibleMoveEndSquareIndices) {
-                legalMoves.add(new Move(board, pinnedPieceX, pinnedPieceY, square.x, square.y));
+                legalMoves.add(new Move(game, pinnedPieceX, pinnedPieceY, square.x, square.y));
             }
         }
 

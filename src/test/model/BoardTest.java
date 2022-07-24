@@ -41,12 +41,12 @@ public class BoardTest {
 
     @Test
     public void makeBasicMoveTest() {
-        Move testPawnMove = new Move(testBoard,2,2,2,4);
+        Move testPawnMove = new Move(testGame,2,2,2,4);
         testBoard.makeMove(testPawnMove);
         assertEquals(0, testBoard.getPiece(2,2));
         assertEquals(wPawn, testBoard.getPiece(2,4));
 
-        Move testKnightMove = new Move(testBoard,7,8,6,6);
+        Move testKnightMove = new Move(testGame,7,8,6,6);
         testBoard.makeMove(testKnightMove);
         assertEquals(0, testBoard.getPiece(7,8));
         assertEquals(bKnight, testBoard.getPiece(6,6));
@@ -56,12 +56,12 @@ public class BoardTest {
     public void makeCaptureTest() {
         testGame.setBoardFEN("2B2r2/8/8/3r4/2P5/7n/4p3/3N2Q1 w - - 0 1");
 
-        Move testPawnCapture = new Move(testBoard,3,4,4,5);
+        Move testPawnCapture = new Move(testGame,3,4,4,5);
         testBoard.makeMove(testPawnCapture);
         assertEquals(0, testBoard.getPiece(3,4));
         assertEquals(wPawn, testBoard.getPiece(4,5));
 
-        Move testRookCapture = new Move(testBoard,6,8,3,8);
+        Move testRookCapture = new Move(testGame,6,8,3,8);
         testBoard.makeMove(testRookCapture);
         assertEquals(0, testBoard.getPiece(6,8));
         assertEquals(bRook, testBoard.getPiece(3,8));
@@ -71,7 +71,7 @@ public class BoardTest {
     public void makeCastlingMoveTest() {
         testGame.setBoardFEN("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1");
 
-        Move testKingSideCastle = new Move(testBoard,5,1,7,1);
+        Move testKingSideCastle = new Move(testGame,5,1,7,1);
         testKingSideCastle.setKingSideCastleMove();
         testBoard.makeMove(testKingSideCastle);
         assertEquals(0, testBoard.getPiece(5,1));
@@ -79,7 +79,7 @@ public class BoardTest {
         assertEquals(0, testBoard.getPiece(8,1));
         assertEquals(wRook, testBoard.getPiece(6,1));
 
-        Move testQueenSideCastle = new Move(testBoard,5,8,3,8);
+        Move testQueenSideCastle = new Move(testGame,5,8,3,8);
         testQueenSideCastle.setQueenSideCastleMove();
         testBoard.makeMove(testQueenSideCastle);
         assertEquals(0, testBoard.getPiece(5,8));
@@ -92,25 +92,25 @@ public class BoardTest {
     public void makePromotionMoveTest() {
         testGame.setBoardFEN("8/1P1P1P1P/8/8/8/8/1p1p1p1p/8 w - - 0 1");
 
-        Move testQueenPromotionMove = new Move(testBoard,2,7,2,8);
+        Move testQueenPromotionMove = new Move(testGame,2,7,2,8);
         testQueenPromotionMove.setQueenPromotionMove();
         testBoard.makeMove(testQueenPromotionMove);
         assertEquals(0, testBoard.getPiece(2,7));
         assertEquals(wQueen, testBoard.getPiece(2,8));
 
-        Move testKnightPromotionMove = new Move(testBoard,4,2,4,1);
+        Move testKnightPromotionMove = new Move(testGame,4,2,4,1);
         testKnightPromotionMove.setKnightPromotionMove();
         testBoard.makeMove(testKnightPromotionMove);
         assertEquals(0, testBoard.getPiece(4,2));
         assertEquals(bKnight, testBoard.getPiece(4,1));
 
-        Move testRookPromotionCapture = new Move(testBoard,8,7,7,8);
+        Move testRookPromotionCapture = new Move(testGame,8,7,7,8);
         testRookPromotionCapture.setRookPromotionMove();
         testBoard.makeMove(testRookPromotionCapture);
         assertEquals(0, testBoard.getPiece(8,7));
         assertEquals(wRook, testBoard.getPiece(7,8));
 
-        Move testBishopPromotionCapture = new Move(testBoard,2,2,1,1);
+        Move testBishopPromotionCapture = new Move(testGame,2,2,1,1);
         testBishopPromotionCapture.setBishopPromotionMove();
         testBoard.makeMove(testBishopPromotionCapture);
         assertEquals(0, testBoard.getPiece(2,2));
@@ -121,7 +121,7 @@ public class BoardTest {
     public void makeEnPassantMoveTest() {
         testGame.setBoardFEN("7k/8/8/1Pp5/8/8/8/7K w - c6 0 2");
 
-        Move testWhiteEnPassantMove = new Move(testBoard,2,5,3,6);
+        Move testWhiteEnPassantMove = new Move(testGame,2,5,3,6);
         testBoard.makeMove(testWhiteEnPassantMove);
         assertEquals(0, testBoard.getPiece(2,5));
         assertEquals(0, testBoard.getPiece(3,5));
@@ -129,7 +129,7 @@ public class BoardTest {
 
         testGame.setBoardFEN("7k/8/8/8/4pP2/8/8/7K b - f3 0 2");
 
-        Move testBlackEnPassantMove = new Move(testBoard,5,4,6,3);
+        Move testBlackEnPassantMove = new Move(testGame,5,4,6,3);
         testBoard.makeMove(testBlackEnPassantMove);
         assertEquals(0, testBoard.getPiece(5,4));
         assertEquals(0, testBoard.getPiece(6,4));
@@ -137,7 +137,7 @@ public class BoardTest {
 
         testGame.setBoardFEN("8/8/K2p4/1Pp4r/1R3p1k/8/4P1P1/8 w - c6 0 2");
 
-        Move testEnPassantMove = new Move(testBoard, 2,5,3,6);
+        Move testEnPassantMove = new Move(testGame, 2,5,3,6);
         testBoard.makeMove(testEnPassantMove);
         assertEquals(empty, testBoard.getPiece(2,5));
         assertEquals(empty, testBoard.getPiece(3,5));
@@ -215,7 +215,7 @@ public class BoardTest {
 
     @Test
     public void unMakeBasicMoveTest() {
-        Move testWhiteMove = new Move(testBoard, 5,2,5,4);
+        Move testWhiteMove = new Move(testGame, 5,2,5,4);
         testBoard.makeMove(testWhiteMove);
         assertEquals(empty, testBoard.getPiece(5,2));
         assertEquals(wPawn, testBoard.getPiece(5,4));
@@ -223,7 +223,7 @@ public class BoardTest {
         assertEquals(wPawn, testBoard.getPiece(5,2));
         assertEquals(empty, testBoard.getPiece(5,4));
 
-        Move testBlackMove = new Move(testBoard, 2, 8, 3, 6);
+        Move testBlackMove = new Move(testGame, 2, 8, 3, 6);
         testBoard.makeMove(testBlackMove);
         assertEquals(empty, testBoard.getPiece(2,8));
         assertEquals(bKnight, testBoard.getPiece(3,6));
@@ -236,7 +236,7 @@ public class BoardTest {
     public void unMakeCaptureTest() {
         testBoard.setBoardFEN("r3k2r/p3b1p1/2pq1pn1/2p1p2p/6bP/1P1P1NP1/PBPNQP2/R3K2R");
 
-        Move testWhiteCapture = new Move(testBoard, 2,2, 5,5);
+        Move testWhiteCapture = new Move(testGame, 2,2, 5,5);
         testBoard.makeMove(testWhiteCapture);
         assertEquals(empty, testBoard.getPiece(2,2));
         assertEquals(wBishop, testBoard.getPiece(5,5));
@@ -246,7 +246,7 @@ public class BoardTest {
 
         testBoard.setBoardFEN("r3k2r/p3b1p1/2pq1pn1/2p1p2p/6bP/1P1P1NP1/PBPNQP2/R3K2R");
 
-        Move testBlackCapture = new Move(testBoard, 7, 4, 6, 3);
+        Move testBlackCapture = new Move(testGame, 7, 4, 6, 3);
         testBoard.makeMove(testBlackCapture);
         assertEquals(empty, testBoard.getPiece(7,4));
         assertEquals(bBishop, testBoard.getPiece(6,3));
@@ -259,7 +259,7 @@ public class BoardTest {
     public void unMakeCastlingMove() {
         testBoard.setBoardFEN("r3k2r/p3b1p1/2pq1pn1/2p1p2p/6bP/1P1P1NP1/PBPNQP2/R3K2R");
 
-        Move testWhiteCastle = new Move(testBoard, 5, 1, 3, 1);
+        Move testWhiteCastle = new Move(testGame, 5, 1, 3, 1);
         testBoard.makeMove(testWhiteCastle);
         assertEquals(empty, testBoard.getPiece(5, 1));
         assertEquals(wKing, testBoard.getPiece(3,1));
@@ -271,7 +271,7 @@ public class BoardTest {
         assertEquals(wRook, testBoard.getPiece(1,1));
         assertEquals(empty, testBoard.getPiece(4,1));
 
-        Move testBlackCastle = new Move(testBoard, 5, 8, 7,8);
+        Move testBlackCastle = new Move(testGame, 5, 8, 7,8);
         testBoard.makeMove(testBlackCastle);
         assertEquals(empty, testBoard.getPiece(5,8));
         assertEquals(bKing, testBoard.getPiece(7,8));
@@ -288,7 +288,7 @@ public class BoardTest {
     public void unMakePromotionMoveTest() {
         testGame.setBoardFEN("8/1P1P1P1P/8/8/8/8/1p1p1p1p/8 w - - 0 1");
 
-        Move testQueenPromotionMove = new Move(testBoard,2,7,2,8);
+        Move testQueenPromotionMove = new Move(testGame,2,7,2,8);
         testQueenPromotionMove.setQueenPromotionMove();
         testBoard.makeMove(testQueenPromotionMove);
         assertEquals(empty, testBoard.getPiece(2,7));
@@ -297,7 +297,7 @@ public class BoardTest {
         assertEquals(wPawn, testBoard.getPiece(2,7));
         assertEquals(empty, testBoard.getPiece(2,8));
 
-        Move testKnightPromotionMove = new Move(testBoard,4,2,4,1);
+        Move testKnightPromotionMove = new Move(testGame,4,2,4,1);
         testKnightPromotionMove.setKnightPromotionMove();
         testBoard.makeMove(testKnightPromotionMove);
         assertEquals(empty, testBoard.getPiece(4,2));
@@ -306,7 +306,7 @@ public class BoardTest {
         assertEquals(bPawn, testBoard.getPiece(4,2));
         assertEquals(empty, testBoard.getPiece(4,1));
 
-        Move testRookPromotionCapture = new Move(testBoard,8,7,7,8);
+        Move testRookPromotionCapture = new Move(testGame,8,7,7,8);
         testRookPromotionCapture.setRookPromotionMove();
         testBoard.makeMove(testRookPromotionCapture);
         assertEquals(empty, testBoard.getPiece(8,7));
@@ -315,7 +315,7 @@ public class BoardTest {
         assertEquals(wPawn, testBoard.getPiece(8,7));
         assertEquals(empty, testBoard.getPiece(7,8));
 
-        Move testBishopPromotionCapture = new Move(testBoard,2,2,1,1);
+        Move testBishopPromotionCapture = new Move(testGame,2,2,1,1);
         testBishopPromotionCapture.setBishopPromotionMove();
         testBoard.makeMove(testBishopPromotionCapture);
         assertEquals(empty, testBoard.getPiece(2,2));
@@ -341,7 +341,7 @@ public class BoardTest {
 
         testGame.setBoardFEN("7k/8/8/8/4pP2/8/8/7K b - f3 0 2");
 
-        Move testBlackEnPassantMove = new Move(testBoard,5,4,6,3);
+        Move testBlackEnPassantMove = new Move(testGame,5,4,6,3);
         testBoard.makeMove(testBlackEnPassantMove);
         assertEquals(empty, testBoard.getPiece(5,4));
         assertEquals(empty, testBoard.getPiece(6,4));
@@ -353,7 +353,7 @@ public class BoardTest {
 
         testGame.setBoardFEN("8/8/K2p4/1Pp4r/1R3p1k/8/4P1P1/8 w - c6 0 2");
 
-        Move testEnPassantMove = new Move(testBoard, 2,5,3,6);
+        Move testEnPassantMove = new Move(testGame, 2,5,3,6);
         testBoard.makeMove(testEnPassantMove);
         assertEquals(empty, testBoard.getPiece(2,5));
         assertEquals(empty, testBoard.getPiece(3,5));

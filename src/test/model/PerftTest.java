@@ -25,7 +25,7 @@ public class PerftTest {
     public void perft() {
         game.setBoardFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
         //System.out.println(perft(2));
-        System.out.println(divide(5));
+        System.out.println(divide(2));
     }
 
     private int perft(int depth) {

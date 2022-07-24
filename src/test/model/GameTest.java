@@ -51,14 +51,14 @@ public class GameTest {
 
     @Test
     public void playMoveTest() {
-        Move testMove1 = new Move(testGame.getBoard(), 5,2,5,4);
+        Move testMove1 = new Move(testGame, 5,2,5,4);
         assertTrue(testGame.playMove(testMove1));
         assertEquals(empty, testGame.getBoard().getPiece(5,2));
         assertEquals(wPawn, testGame.getBoard().getPiece(5,4));
         assertEquals(testGame.getPlayers()[1], testGame.getCurrentTurn());
         assertEquals(testMove1, testGame.getBoard().getMoveList().get(0));
 
-        Move testMove2 = new Move(testGame.getBoard(), 1,8, 1, 4);
+        Move testMove2 = new Move(testGame, 1,8, 1, 4);
         assertFalse(testGame.playMove(testMove2));
         assertEquals(bRook, testGame.getBoard().getPiece(1,8));
         assertEquals(empty, testGame.getBoard().getPiece(1,4));
@@ -67,7 +67,7 @@ public class GameTest {
 
         testGame.setBoardFEN("rnbqkbnr/pppp1ppp/8/4p3/3P4/5N2/PPP1PPPP/RNBQKB1R b KQkq - 1 2");
 
-        Move testMove3 = new Move(testGame.getBoard(), 6,8, 2, 4);
+        Move testMove3 = new Move(testGame, 6,8, 2, 4);
         assertTrue(testGame.playMove(testMove3));
         assertEquals(empty, testGame.getBoard().getPiece(6,8));
         assertEquals(bBishop, testGame.getBoard().getPiece(2,4));
@@ -76,7 +76,7 @@ public class GameTest {
 
         testGame.setBoardFEN("r1bqkbnr/1pppppp1/p1n4p/7Q/2B5/4P3/PPPP1PPP/RNB1K1NR w KQkq - 2 4");
 
-        Move testMove4 = new Move(testGame.getBoard(), 8, 5, 6,7);
+        Move testMove4 = new Move(testGame, 8, 5, 6,7);
         assertTrue(testGame.playMove(testMove4));
         assertEquals(CheckStatus.BLACK_IN_CHECK, testGame.getCheckStatus());
         assertEquals(GameStatus.WHITE_CHECKMATE, testGame.getGameStatus());

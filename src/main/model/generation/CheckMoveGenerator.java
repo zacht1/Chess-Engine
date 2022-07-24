@@ -107,7 +107,7 @@ public class CheckMoveGenerator {
             int endIndex = Board.getSquareIndex(startX, startY - 1);
 
             if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                legalMoves.add(new Move(board, startX, startY, startX, startY - 1));
+                legalMoves.add(new Move(game, startX, startY, startX, startY - 1));
             }
         }
 
@@ -116,7 +116,7 @@ public class CheckMoveGenerator {
             int endIndex = Board.getSquareIndex(startX, startY - 2);
 
             if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                legalMoves.add(new Move(board, startX, startY, startX, startY - 2));
+                legalMoves.add(new Move(game, startX, startY, startX, startY - 2));
             }
         }
 
@@ -126,10 +126,10 @@ public class CheckMoveGenerator {
 
             if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
                 if (startY - 1 == 1) {
-                    Move queenPromotion = new Move(board, startX, startY, startX - 1, 1);
-                    Move knightPromotion = new Move(board, startX, startY, startX - 1, 1);
-                    Move bishopPromotion = new Move(board, startX, startY, startX - 1, 1);
-                    Move rookPromotion = new Move(board, startX, startY, startX - 1, 1);
+                    Move queenPromotion = new Move(game, startX, startY, startX - 1, 1);
+                    Move knightPromotion = new Move(game, startX, startY, startX - 1, 1);
+                    Move bishopPromotion = new Move(game, startX, startY, startX - 1, 1);
+                    Move rookPromotion = new Move(game, startX, startY, startX - 1, 1);
                     queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                     knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                     bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -140,16 +140,16 @@ public class CheckMoveGenerator {
                     legalMoves.add(bishopPromotion);
                     legalMoves.add(rookPromotion);
                 } else {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY - 1));
                 }
             }
 
             if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
                 if (startY - 1 == 1) {
-                    Move queenPromotion = new Move(board, startX, startY, startX - 1, 1);
-                    Move knightPromotion = new Move(board, startX, startY, startX - 1, 1);
-                    Move bishopPromotion = new Move(board, startX, startY, startX - 1, 1);
-                    Move rookPromotion = new Move(board, startX, startY, startX - 1, 1);
+                    Move queenPromotion = new Move(game, startX, startY, startX - 1, 1);
+                    Move knightPromotion = new Move(game, startX, startY, startX - 1, 1);
+                    Move bishopPromotion = new Move(game, startX, startY, startX - 1, 1);
+                    Move rookPromotion = new Move(game, startX, startY, startX - 1, 1);
                     queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                     knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                     bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -160,7 +160,7 @@ public class CheckMoveGenerator {
                     legalMoves.add(bishopPromotion);
                     legalMoves.add(rookPromotion);
                 } else {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY - 1));
                 }
             }
         }
@@ -170,10 +170,10 @@ public class CheckMoveGenerator {
 
             if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
                 if (startY - 1 == 1) {
-                    Move queenPromotion = new Move(board, startX, startY, startX + 1, 1);
-                    Move knightPromotion = new Move(board, startX, startY, startX + 1, 1);
-                    Move bishopPromotion = new Move(board, startX, startY, startX + 1, 1);
-                    Move rookPromotion = new Move(board, startX, startY, startX + 1, 1);
+                    Move queenPromotion = new Move(game, startX, startY, startX + 1, 1);
+                    Move knightPromotion = new Move(game, startX, startY, startX + 1, 1);
+                    Move bishopPromotion = new Move(game, startX, startY, startX + 1, 1);
+                    Move rookPromotion = new Move(game, startX, startY, startX + 1, 1);
                     queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                     knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                     bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -184,16 +184,16 @@ public class CheckMoveGenerator {
                     legalMoves.add(bishopPromotion);
                     legalMoves.add(rookPromotion);
                 } else {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY - 1));
                 }
             }
 
             if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
                 if (startY - 1 == 1) {
-                    Move queenPromotion = new Move(board, startX, startY, startX + 1, 1);
-                    Move knightPromotion = new Move(board, startX, startY, startX + 1, 1);
-                    Move bishopPromotion = new Move(board, startX, startY, startX + 1, 1);
-                    Move rookPromotion = new Move(board, startX, startY, startX + 1, 1);
+                    Move queenPromotion = new Move(game, startX, startY, startX + 1, 1);
+                    Move knightPromotion = new Move(game, startX, startY, startX + 1, 1);
+                    Move bishopPromotion = new Move(game, startX, startY, startX + 1, 1);
+                    Move rookPromotion = new Move(game, startX, startY, startX + 1, 1);
                     queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                     knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                     bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -204,7 +204,7 @@ public class CheckMoveGenerator {
                     legalMoves.add(bishopPromotion);
                     legalMoves.add(rookPromotion);
                 } else {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY - 1));
                 }
             }
         }
@@ -221,11 +221,11 @@ public class CheckMoveGenerator {
                     int captureIndex = Board.getSquareIndex(startX - 1, startY);
 
                     if (!captureMask.isEmpty() && captureMask.contains(captureIndex)) {
-                        legalMoves.add(new Move(board, startX, startY, startX - 1, startY - 1));
+                        legalMoves.add(new Move(game, startX, startY, startX - 1, startY - 1));
                     }
 
                     if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                        legalMoves.add(new Move(board, startX, startY, startX - 1, startY - 1));
+                        legalMoves.add(new Move(game, startX, startY, startX - 1, startY - 1));
                     }
                 }
 
@@ -234,11 +234,11 @@ public class CheckMoveGenerator {
                     int captureIndex = Board.getSquareIndex(startX + 1, startY);
 
                     if (!captureMask.isEmpty() && captureMask.contains(captureIndex)) {
-                        legalMoves.add(new Move(board, startX, startY, startX + 1, startY - 1));
+                        legalMoves.add(new Move(game, startX, startY, startX + 1, startY - 1));
                     }
 
                     if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                        legalMoves.add(new Move(board, startX, startY, startX + 1, startY - 1));
+                        legalMoves.add(new Move(game, startX, startY, startX + 1, startY - 1));
                     }
                 }
             }
@@ -263,7 +263,7 @@ public class CheckMoveGenerator {
             int endIndex = Board.getSquareIndex(startX, startY + 1);
 
             if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                legalMoves.add(new Move(board, startX, startY, startX, startY + 1));
+                legalMoves.add(new Move(game, startX, startY, startX, startY + 1));
             }
         }
 
@@ -272,7 +272,7 @@ public class CheckMoveGenerator {
             int endIndex = Board.getSquareIndex(startX, startY + 2);
 
             if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                legalMoves.add(new Move(board, startX, startY, startX, startY + 2));
+                legalMoves.add(new Move(game, startX, startY, startX, startY + 2));
             }
         }
 
@@ -282,10 +282,10 @@ public class CheckMoveGenerator {
 
             if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
                 if (startY + 1 == 8) {
-                    Move queenPromotion = new Move(board, startX, startY, startX + 1, 8);
-                    Move knightPromotion = new Move(board, startX, startY, startX + 1, 8);
-                    Move bishopPromotion = new Move(board, startX, startY, startX + 1, 8);
-                    Move rookPromotion = new Move(board, startX, startY, startX + 1, 8);
+                    Move queenPromotion = new Move(game, startX, startY, startX + 1, 8);
+                    Move knightPromotion = new Move(game, startX, startY, startX + 1, 8);
+                    Move bishopPromotion = new Move(game, startX, startY, startX + 1, 8);
+                    Move rookPromotion = new Move(game, startX, startY, startX + 1, 8);
                     queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                     knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                     bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -296,16 +296,16 @@ public class CheckMoveGenerator {
                     legalMoves.add(bishopPromotion);
                     legalMoves.add(rookPromotion);
                 } else {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY + 1));
                 }
             }
 
             if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
                 if (startY + 1 == 8) {
-                    Move queenPromotion = new Move(board, startX, startY, startX + 1, 8);
-                    Move knightPromotion = new Move(board, startX, startY, startX + 1, 8);
-                    Move bishopPromotion = new Move(board, startX, startY, startX + 1, 8);
-                    Move rookPromotion = new Move(board, startX, startY, startX + 1, 8);
+                    Move queenPromotion = new Move(game, startX, startY, startX + 1, 8);
+                    Move knightPromotion = new Move(game, startX, startY, startX + 1, 8);
+                    Move bishopPromotion = new Move(game, startX, startY, startX + 1, 8);
+                    Move rookPromotion = new Move(game, startX, startY, startX + 1, 8);
                     queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                     knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                     bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -316,7 +316,7 @@ public class CheckMoveGenerator {
                     legalMoves.add(bishopPromotion);
                     legalMoves.add(rookPromotion);
                 } else {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY + 1));
                 }
             }
         }
@@ -326,10 +326,10 @@ public class CheckMoveGenerator {
 
             if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
                 if (startY + 1 == 8) {
-                    Move queenPromotion = new Move(board, startX, startY, startX - 1, 8);
-                    Move knightPromotion = new Move(board, startX, startY, startX - 1, 8);
-                    Move bishopPromotion = new Move(board, startX, startY, startX - 1, 8);
-                    Move rookPromotion = new Move(board, startX, startY, startX - 1, 8);
+                    Move queenPromotion = new Move(game, startX, startY, startX - 1, 8);
+                    Move knightPromotion = new Move(game, startX, startY, startX - 1, 8);
+                    Move bishopPromotion = new Move(game, startX, startY, startX - 1, 8);
+                    Move rookPromotion = new Move(game, startX, startY, startX - 1, 8);
                     queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                     knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                     bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -340,16 +340,16 @@ public class CheckMoveGenerator {
                     legalMoves.add(bishopPromotion);
                     legalMoves.add(rookPromotion);
                 } else {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY + 1));
                 }
             }
 
             if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
                 if (startY + 1 == 8) {
-                    Move queenPromotion = new Move(board, startX, startY, startX - 1, 8);
-                    Move knightPromotion = new Move(board, startX, startY, startX - 1, 8);
-                    Move bishopPromotion = new Move(board, startX, startY, startX - 1, 8);
-                    Move rookPromotion = new Move(board, startX, startY, startX - 1, 8);
+                    Move queenPromotion = new Move(game, startX, startY, startX - 1, 8);
+                    Move knightPromotion = new Move(game, startX, startY, startX - 1, 8);
+                    Move bishopPromotion = new Move(game, startX, startY, startX - 1, 8);
+                    Move rookPromotion = new Move(game, startX, startY, startX - 1, 8);
                     queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                     knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                     bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -360,7 +360,7 @@ public class CheckMoveGenerator {
                     legalMoves.add(bishopPromotion);
                     legalMoves.add(rookPromotion);
                 } else {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY + 1));
                 }
             }
         }
@@ -378,11 +378,11 @@ public class CheckMoveGenerator {
                     int captureIndex = Board.getSquareIndex(startX - 1, startY);
 
                     if (!captureMask.isEmpty() && captureMask.contains(captureIndex)) {
-                        legalMoves.add(new Move(board, startX, startY, startX - 1, startY + 1));
+                        legalMoves.add(new Move(game, startX, startY, startX - 1, startY + 1));
                     }
 
                     if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                        legalMoves.add(new Move(board, startX, startY, startX - 1, startY + 1));
+                        legalMoves.add(new Move(game, startX, startY, startX - 1, startY + 1));
                     }
                 }
 
@@ -391,11 +391,11 @@ public class CheckMoveGenerator {
                     int captureIndex = Board.getSquareIndex(startX + 1, startY);
 
                     if (!captureMask.isEmpty() && captureMask.contains(captureIndex)) {
-                        legalMoves.add(new Move(board, startX, startY, startX + 1, startY + 1));
+                        legalMoves.add(new Move(game, startX, startY, startX + 1, startY + 1));
                     }
 
                     if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                        legalMoves.add(new Move(board, startX, startY, startX + 1, startY + 1));
+                        legalMoves.add(new Move(game, startX, startY, startX + 1, startY + 1));
                     }
                 }
             }
@@ -417,11 +417,11 @@ public class CheckMoveGenerator {
                 int endIndex = Board.getSquareIndex(startX + 1, startY + 2);
 
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY + 2));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY + 2));
                 }
 
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY + 2));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY + 2));
                 }
             }
         }
@@ -433,11 +433,11 @@ public class CheckMoveGenerator {
                 int endIndex = Board.getSquareIndex(startX + 2, startY + 1);
 
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 2, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX + 2, startY + 1));
                 }
 
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 2, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX + 2, startY + 1));
                 }
             }
         }
@@ -449,11 +449,11 @@ public class CheckMoveGenerator {
                 int endIndex = Board.getSquareIndex(startX - 1, startY + 2);
 
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY + 2));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY + 2));
                 }
 
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY + 2));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY + 2));
                 }
             }
         }
@@ -465,11 +465,11 @@ public class CheckMoveGenerator {
                 int endIndex = Board.getSquareIndex(startX - 2, startY + 1);
 
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 2, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX - 2, startY + 1));
                 }
 
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 2, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX - 2, startY + 1));
                 }
             }
         }
@@ -481,11 +481,11 @@ public class CheckMoveGenerator {
                 int endIndex = Board.getSquareIndex(startX - 2, startY - 1);
 
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 2, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX - 2, startY - 1));
                 }
 
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 2, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX - 2, startY - 1));
                 }
             }
         }
@@ -497,11 +497,11 @@ public class CheckMoveGenerator {
                 int endIndex = Board.getSquareIndex(startX - 1, startY - 2);
 
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY - 2));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY - 2));
                 }
 
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY - 2));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY - 2));
                 }
             }
         }
@@ -513,11 +513,11 @@ public class CheckMoveGenerator {
                 int endIndex = Board.getSquareIndex(startX + 1, startY - 2);
 
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY - 2));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY - 2));
                 }
 
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY - 2));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY - 2));
                 }
             }
         }
@@ -529,11 +529,11 @@ public class CheckMoveGenerator {
                 int endIndex = Board.getSquareIndex(startX + 2, startY - 1);
 
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 2, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX + 2, startY - 1));
                 }
 
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 2, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX + 2, startY - 1));
                 }
             }
         }
@@ -598,7 +598,7 @@ public class CheckMoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX, startY + 1))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX, startY + 1));
                 }
             }
         }
@@ -609,7 +609,7 @@ public class CheckMoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX, startY - 1))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX, startY - 1));
                 }
             }
         }
@@ -620,7 +620,7 @@ public class CheckMoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX - 1, startY))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY));
                 }
             }
         }
@@ -631,7 +631,7 @@ public class CheckMoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX + 1, startY))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY));
                 }
             }
         }
@@ -642,7 +642,7 @@ public class CheckMoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX - 1, startY + 1))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY + 1));
                 }
             }
         }
@@ -653,7 +653,7 @@ public class CheckMoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX + 1, startY + 1))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY + 1));
                 }
             }
         }
@@ -664,7 +664,7 @@ public class CheckMoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX - 1, startY - 1))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY - 1));
                 }
             }
         }
@@ -675,7 +675,7 @@ public class CheckMoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX + 1, startY - 1))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY - 1));
                 }
             }
         }
@@ -691,11 +691,11 @@ public class CheckMoveGenerator {
 
             if (board.getPiece(startX, y) == 0) {
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX, y));
+                    legalMoves.add(new Move(game, startX, startY, startX, y));
                 }
             } else if (board.getPiece(startX, y) < 0 && whiteToPlay || board.getPiece(startX, y) > 0 && !whiteToPlay) {
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX, y));
+                    legalMoves.add(new Move(game, startX, startY, startX, y));
                 }
                 break;
             } else {
@@ -710,11 +710,11 @@ public class CheckMoveGenerator {
 
             if (board.getPiece(startX, y) == 0) {
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX, y));
+                    legalMoves.add(new Move(game, startX, startY, startX, y));
                 }
             } else if (board.getPiece(startX, y) < 0 && whiteToPlay || board.getPiece(startX, y) > 0 && !whiteToPlay) {
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, startX, y));
+                    legalMoves.add(new Move(game, startX, startY, startX, y));
                 }
                 break;
             } else {
@@ -728,11 +728,11 @@ public class CheckMoveGenerator {
             int endIndex = Board.getSquareIndex(x, startY);
             if (board.getPiece(x, startY) == 0) {
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, x, startY));
+                    legalMoves.add(new Move(game, startX, startY, x, startY));
                 }
             } else if (board.getPiece(x, startY) < 0 && whiteToPlay || board.getPiece(x, startY) > 0 && !whiteToPlay) {
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, x, startY));
+                    legalMoves.add(new Move(game, startX, startY, x, startY));
                 }
                 break;
             }  else {
@@ -746,11 +746,11 @@ public class CheckMoveGenerator {
             int endIndex = Board.getSquareIndex(x, startY);
             if (board.getPiece(x, startY) == 0) {
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, x, startY));
+                    legalMoves.add(new Move(game, startX, startY, x, startY));
                 }
             } else if (board.getPiece(x, startY) < 0 && whiteToPlay || board.getPiece(x, startY) > 0 && !whiteToPlay) {
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, x, startY));
+                    legalMoves.add(new Move(game, startX, startY, x, startY));
                 }
                 break;
             }  else {
@@ -770,11 +770,11 @@ public class CheckMoveGenerator {
             int endIndex = Board.getSquareIndex(x,y);
             if (board.getPiece(x, y) == 0) {
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, x, y));
+                    legalMoves.add(new Move(game, startX, startY, x, y));
                 }
             } else if (board.getPiece(x, y) < 0 && whiteToPlay || board.getPiece(x,y) > 0 && !whiteToPlay) {
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, x, y));
+                    legalMoves.add(new Move(game, startX, startY, x, y));
                 }
                 break;
             } else {
@@ -796,11 +796,11 @@ public class CheckMoveGenerator {
             int endIndex = Board.getSquareIndex(x,y);
             if (board.getPiece(x, y) == 0) {
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, x, y));
+                    legalMoves.add(new Move(game, startX, startY, x, y));
                 }
             } else if (board.getPiece(x, y) < 0 && whiteToPlay || board.getPiece(x,y) > 0 && !whiteToPlay) {
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, x, y));
+                    legalMoves.add(new Move(game, startX, startY, x, y));
                 }
                 break;
             } else {
@@ -822,11 +822,11 @@ public class CheckMoveGenerator {
             int endIndex = Board.getSquareIndex(x,y);
             if (board.getPiece(x, y) == 0) {
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, x, y));
+                    legalMoves.add(new Move(game, startX, startY, x, y));
                 }
             } else if (board.getPiece(x, y) < 0 && whiteToPlay || board.getPiece(x,y) > 0 && !whiteToPlay) {
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, x, y));
+                    legalMoves.add(new Move(game, startX, startY, x, y));
                 }
                 break;
             } else {
@@ -848,11 +848,11 @@ public class CheckMoveGenerator {
             int endIndex = Board.getSquareIndex(x,y);
             if (board.getPiece(x, y) == 0) {
                 if (!pushMask.isEmpty() && pushMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, x, y));
+                    legalMoves.add(new Move(game, startX, startY, x, y));
                 }
             } else if (board.getPiece(x, y) < 0 && whiteToPlay || board.getPiece(x,y) > 0 && !whiteToPlay) {
                 if (!captureMask.isEmpty() && captureMask.contains(endIndex)) {
-                    legalMoves.add(new Move(board, startX, startY, x, y));
+                    legalMoves.add(new Move(game, startX, startY, x, y));
                 }
                 break;
             } else {

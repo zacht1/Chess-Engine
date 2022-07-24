@@ -141,10 +141,10 @@ public class MoveGenerator {
         // 1 square move
         if (startY - 1 >= 1 && board.getPiece(startX, startY - 1) == 0) {
             if (startY - 1 == 1) {
-                Move queenPromotion = new Move(board, startX, startY, startX, 1);
-                Move knightPromotion = new Move(board, startX, startY, startX, 1);
-                Move bishopPromotion = new Move(board, startX, startY, startX, 1);
-                Move rookPromotion = new Move(board, startX, startY, startX, 1);
+                Move queenPromotion = new Move(game, startX, startY, startX, 1);
+                Move knightPromotion = new Move(game, startX, startY, startX, 1);
+                Move bishopPromotion = new Move(game, startX, startY, startX, 1);
+                Move rookPromotion = new Move(game, startX, startY, startX, 1);
                 queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                 knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                 bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -155,22 +155,22 @@ public class MoveGenerator {
                 legalMoves.add(bishopPromotion);
                 legalMoves.add(rookPromotion);
             } else {
-                legalMoves.add(new Move(board, startX, startY, startX, startY - 1));
+                legalMoves.add(new Move(game, startX, startY, startX, startY - 1));
             }
         }
 
         // 2 square move
         if (startY == 7 && board.getPiece(startX, startY - 1) == 0 && board.getPiece(startX, startY - 2) == 0) {
-            legalMoves.add(new Move(board, startX, startY, startX, startY - 2));
+            legalMoves.add(new Move(game, startX, startY, startX, startY - 2));
         }
 
         // captures
         if (startX - 1 >= 1 && startY - 1 >= 1 && board.getPiece(startX - 1, startY - 1) > 0) {
             if (startY - 1 == 1) {
-                Move queenPromotion = new Move(board, startX, startY, startX - 1, 1);
-                Move knightPromotion = new Move(board, startX, startY, startX - 1, 1);
-                Move bishopPromotion = new Move(board, startX, startY, startX - 1, 1);
-                Move rookPromotion = new Move(board, startX, startY, startX - 1, 1);
+                Move queenPromotion = new Move(game, startX, startY, startX - 1, 1);
+                Move knightPromotion = new Move(game, startX, startY, startX - 1, 1);
+                Move bishopPromotion = new Move(game, startX, startY, startX - 1, 1);
+                Move rookPromotion = new Move(game, startX, startY, startX - 1, 1);
                 queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                 knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                 bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -181,16 +181,16 @@ public class MoveGenerator {
                 legalMoves.add(bishopPromotion);
                 legalMoves.add(rookPromotion);
             } else {
-                legalMoves.add(new Move(board, startX, startY, startX - 1, startY - 1));
+                legalMoves.add(new Move(game, startX, startY, startX - 1, startY - 1));
             }
         }
 
         if (startX + 1 <= 8 && startY - 1 >= 1 && board.getPiece(startX + 1, startY - 1) > 0) {
             if (startY - 1 == 1) {
-                Move queenPromotion = new Move(board, startX, startY, startX + 1, 1);
-                Move knightPromotion = new Move(board, startX, startY, startX + 1, 1);
-                Move bishopPromotion = new Move(board, startX, startY, startX + 1, 1);
-                Move rookPromotion = new Move(board, startX, startY, startX + 1, 1);
+                Move queenPromotion = new Move(game, startX, startY, startX + 1, 1);
+                Move knightPromotion = new Move(game, startX, startY, startX + 1, 1);
+                Move bishopPromotion = new Move(game, startX, startY, startX + 1, 1);
+                Move rookPromotion = new Move(game, startX, startY, startX + 1, 1);
                 queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                 knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                 bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -201,7 +201,7 @@ public class MoveGenerator {
                 legalMoves.add(bishopPromotion);
                 legalMoves.add(rookPromotion);
             } else {
-                legalMoves.add(new Move(board, startX, startY, startX + 1, startY - 1));
+                legalMoves.add(new Move(game, startX, startY, startX + 1, startY - 1));
             }
         }
 
@@ -213,13 +213,13 @@ public class MoveGenerator {
             if (startY == 4 && moves.get(mostRecent).getEndY() == 4 && moves.get(mostRecent).getStartY() == 2 &&
                     moves.get(mostRecent).getEndX() == startX - 1 && board.getPiece(startX - 1, startY) == Piece.wPawn &&
                     legalBlackEnPassant(startX, startY, startX - 1, startY))  {
-                legalMoves.add(new Move(board, startX, startY, startX - 1, startY - 1));
+                legalMoves.add(new Move(game, startX, startY, startX - 1, startY - 1));
             }
 
             if (startY == 4 && moves.get(mostRecent).getEndY() == 4 && moves.get(mostRecent).getStartY() == 2 &&
                     moves.get(mostRecent).getEndX() == startX + 1 && board.getPiece(startX + 1, startY) == Piece.wPawn &&
                     legalBlackEnPassant(startX, startY, startX + 1, startY)) {
-                legalMoves.add(new Move(board, startX, startY, startX + 1, startY - 1));
+                legalMoves.add(new Move(game, startX, startY, startX + 1, startY - 1));
             }
         }
     }
@@ -279,10 +279,10 @@ public class MoveGenerator {
         // 1 square move
         if (startY + 1 <= 8 && board.getPiece(startX, startY + 1) == 0) {
             if (startY + 1 == 8) {
-                Move queenPromotion = new Move(board, startX, startY, startX, 8);
-                Move knightPromotion = new Move(board, startX, startY, startX, 8);
-                Move bishopPromotion = new Move(board, startX, startY, startX, 8);
-                Move rookPromotion = new Move(board, startX, startY, startX, 8);
+                Move queenPromotion = new Move(game, startX, startY, startX, 8);
+                Move knightPromotion = new Move(game, startX, startY, startX, 8);
+                Move bishopPromotion = new Move(game, startX, startY, startX, 8);
+                Move rookPromotion = new Move(game, startX, startY, startX, 8);
                 queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                 knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                 bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -293,22 +293,22 @@ public class MoveGenerator {
                 legalMoves.add(bishopPromotion);
                 legalMoves.add(rookPromotion);
             } else {
-                legalMoves.add(new Move(board, startX, startY, startX, startY + 1));
+                legalMoves.add(new Move(game, startX, startY, startX, startY + 1));
             }
         }
 
         // 2 square move
         if (startY == 2 && board.getPiece(startX, startY + 1) == 0 && board.getPiece(startX, startY + 2) == 0) {
-            legalMoves.add(new Move(board, startX, startY, startX, startY + 2));
+            legalMoves.add(new Move(game, startX, startY, startX, startY + 2));
         }
 
         // captures
         if (startX + 1 <= 8 && startY + 1 <= 8 && board.getPiece(startX + 1, startY + 1) < 0) {
             if (startY + 1 == 8) {
-                Move queenPromotion = new Move(board, startX, startY, startX + 1, 8);
-                Move knightPromotion = new Move(board, startX, startY, startX + 1, 8);
-                Move bishopPromotion = new Move(board, startX, startY, startX + 1, 8);
-                Move rookPromotion = new Move(board, startX, startY, startX + 1, 8);
+                Move queenPromotion = new Move(game, startX, startY, startX + 1, 8);
+                Move knightPromotion = new Move(game, startX, startY, startX + 1, 8);
+                Move bishopPromotion = new Move(game, startX, startY, startX + 1, 8);
+                Move rookPromotion = new Move(game, startX, startY, startX + 1, 8);
                 queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                 knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                 bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -319,16 +319,16 @@ public class MoveGenerator {
                 legalMoves.add(bishopPromotion);
                 legalMoves.add(rookPromotion);
             } else {
-                legalMoves.add(new Move(board, startX, startY, startX + 1, startY + 1));
+                legalMoves.add(new Move(game, startX, startY, startX + 1, startY + 1));
             }
         }
 
         if (startX - 1 >= 1 && startY + 1 <= 8 && board.getPiece(startX - 1, startY + 1) < 0) {
             if (startY + 1 == 8) {
-                Move queenPromotion = new Move(board, startX, startY, startX - 1, 8);
-                Move knightPromotion = new Move(board, startX, startY, startX - 1, 8);
-                Move bishopPromotion = new Move(board, startX, startY, startX - 1, 8);
-                Move rookPromotion = new Move(board, startX, startY, startX - 1, 8);
+                Move queenPromotion = new Move(game, startX, startY, startX - 1, 8);
+                Move knightPromotion = new Move(game, startX, startY, startX - 1, 8);
+                Move bishopPromotion = new Move(game, startX, startY, startX - 1, 8);
+                Move rookPromotion = new Move(game, startX, startY, startX - 1, 8);
                 queenPromotion.setMoveType(MoveType.QUEEN_PROMOTION);
                 knightPromotion.setMoveType(MoveType.KNIGHT_PROMOTION);
                 bishopPromotion.setMoveType(MoveType.BISHOP_PROMOTION);
@@ -339,7 +339,7 @@ public class MoveGenerator {
                 legalMoves.add(bishopPromotion);
                 legalMoves.add(rookPromotion);
             } else {
-                legalMoves.add(new Move(board, startX, startY, startX - 1, startY + 1));
+                legalMoves.add(new Move(game, startX, startY, startX - 1, startY + 1));
             }
         }
 
@@ -351,12 +351,12 @@ public class MoveGenerator {
             if (startY == 5 && moves.get(mostRecent).getEndY() == 5 && moves.get(mostRecent).getStartY() == 7 &&
                     moves.get(mostRecent).getEndX() == startX - 1 && board.getPiece(startX - 1, startY) == Piece.bPawn &&
                     legalWhiteEnPassant(startX, startY, startX - 1, startY)) {
-                legalMoves.add(new Move(board, startX, startY, startX - 1, startY + 1));
+                legalMoves.add(new Move(game, startX, startY, startX - 1, startY + 1));
             }
             if (startY == 5 && moves.get(mostRecent).getEndY() == 5 && moves.get(mostRecent).getStartY() == 7 &&
                     moves.get(mostRecent).getEndX() == startX + 1 && board.getPiece(startX + 1, startY) == Piece.bPawn &&
                     legalWhiteEnPassant(startX, startY, startX + 1, startY)) {
-                legalMoves.add(new Move(board, startX, startY, startX + 1, startY + 1));
+                legalMoves.add(new Move(game, startX, startY, startX + 1, startY + 1));
             }
         }
     }
@@ -410,7 +410,7 @@ public class MoveGenerator {
             int capturedPiece = board.getPiece(startX + 1, startY + 2);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, startX + 1, startY + 2));
+                legalMoves.add(new Move(game, startX, startY, startX + 1, startY + 2));
             }
         }
 
@@ -418,7 +418,7 @@ public class MoveGenerator {
             int capturedPiece = board.getPiece(startX + 2, startY + 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, startX + 2, startY + 1));
+                legalMoves.add(new Move(game, startX, startY, startX + 2, startY + 1));
             }
         }
 
@@ -426,7 +426,7 @@ public class MoveGenerator {
             int capturedPiece = board.getPiece(startX - 1, startY + 2);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, startX - 1, startY + 2));
+                legalMoves.add(new Move(game, startX, startY, startX - 1, startY + 2));
             }
         }
 
@@ -434,7 +434,7 @@ public class MoveGenerator {
             int capturedPiece = board.getPiece(startX - 2, startY + 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, startX - 2, startY + 1));
+                legalMoves.add(new Move(game, startX, startY, startX - 2, startY + 1));
             }
         }
 
@@ -442,7 +442,7 @@ public class MoveGenerator {
             int capturedPiece = board.getPiece(startX - 2, startY - 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, startX - 2, startY - 1));
+                legalMoves.add(new Move(game, startX, startY, startX - 2, startY - 1));
             }
         }
 
@@ -450,7 +450,7 @@ public class MoveGenerator {
             int capturedPiece = board.getPiece(startX - 1, startY - 2);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, startX - 1, startY - 2));
+                legalMoves.add(new Move(game, startX, startY, startX - 1, startY - 2));
             }
         }
 
@@ -458,7 +458,7 @@ public class MoveGenerator {
             int capturedPiece = board.getPiece(startX + 1, startY - 2);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, startX + 1, startY - 2));
+                legalMoves.add(new Move(game, startX, startY, startX + 1, startY - 2));
             }
         }
 
@@ -466,7 +466,7 @@ public class MoveGenerator {
             int capturedPiece = board.getPiece(startX + 2, startY - 1);
 
             if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, startX + 2, startY - 1));
+                legalMoves.add(new Move(game, startX, startY, startX + 2, startY - 1));
             }
         }
     }
@@ -552,7 +552,7 @@ public class MoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX, startY + 1))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX, startY + 1));
                 }
             }
         }
@@ -563,7 +563,7 @@ public class MoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX, startY - 1))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX, startY - 1));
                 }
             }
         }
@@ -574,7 +574,7 @@ public class MoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX - 1, startY))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY));
                 }
             }
         }
@@ -585,7 +585,7 @@ public class MoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX + 1, startY))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY));
                 }
             }
         }
@@ -596,7 +596,7 @@ public class MoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX - 1, startY + 1))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY + 1));
                 }
             }
         }
@@ -607,7 +607,7 @@ public class MoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX + 1, startY + 1))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY + 1));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY + 1));
                 }
             }
         }
@@ -618,7 +618,7 @@ public class MoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX - 1, startY - 1))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX - 1, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX - 1, startY - 1));
                 }
             }
         }
@@ -629,7 +629,7 @@ public class MoveGenerator {
 
             if (!threatMap.contains(Board.getSquareIndex(startX + 1, startY - 1))) {
                 if (capturedPiece == 0 || capturedPiece < 0 && whiteToPlay || capturedPiece > 0 && !whiteToPlay) {
-                    legalMoves.add(new Move(board, startX, startY, startX + 1, startY - 1));
+                    legalMoves.add(new Move(game, startX, startY, startX + 1, startY - 1));
                 }
             }
         }
@@ -645,14 +645,14 @@ public class MoveGenerator {
         if (game.canWhiteKingSideCastle() && board.getPiece(6, 1) == Piece.empty &&
                 board.getPiece(7, 1) == Piece.empty && board.getPiece(8, 1) == Piece.wRook) { // white king side castle
             if (!threatMap.contains(5) && !threatMap.contains(6)) {
-                legalMoves.add(new Move(board, startX, startY, 7, 1));
+                legalMoves.add(new Move(game, startX, startY, 7, 1));
             }
         }
 
         if (game.canWhiteQueenSideCastle() && board.getPiece(4, 1) == Piece.empty &&
                 board.getPiece(3, 1) == Piece.empty && board.getPiece(2, 1) == Piece.empty && board.getPiece(1,1) == Piece.wRook) { // white queen side castle
             if (!threatMap.contains(3) && !threatMap.contains(2)) {
-                legalMoves.add(new Move(board, startX, startY, 3, 1));
+                legalMoves.add(new Move(game, startX, startY, 3, 1));
             }
         }
     }
@@ -661,14 +661,14 @@ public class MoveGenerator {
         if (game.canBlackKingSideCastle() && board.getPiece(6, 8) == Piece.empty &&
                 board.getPiece(7, 8) == Piece.empty && board.getPiece(8, 8) == Piece.bRook) { // white king side castle
             if (!threatMap.contains(61) && !threatMap.contains(62)) {
-                legalMoves.add(new Move(board, startX, startY, 7, 8));
+                legalMoves.add(new Move(game, startX, startY, 7, 8));
             }
         }
 
         if (game.canBlackQueenSideCastle() && board.getPiece(4, 8) == Piece.empty &&
                 board.getPiece(3, 8) == Piece.empty && board.getPiece(2, 8) == Piece.empty && board.getPiece(1,8) == Piece.bRook) { // white queen side castle
             if (!threatMap.contains(58) && !threatMap.contains(59)) {
-                legalMoves.add(new Move(board, startX, startY, 3, 8));
+                legalMoves.add(new Move(game, startX, startY, 3, 8));
             }
         }
     }
@@ -680,9 +680,9 @@ public class MoveGenerator {
     private void generateNorthMoves(int startX, int startY) {
         for (int y = startY + 1; y <= 8; y++) {
             if (board.getPiece(startX, y) == 0) {
-                legalMoves.add(new Move(board, startX, startY, startX, y));
+                legalMoves.add(new Move(game, startX, startY, startX, y));
             } else if (board.getPiece(startX, y) < 0 && whiteToPlay || board.getPiece(startX, y) > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, startX, y));
+                legalMoves.add(new Move(game, startX, startY, startX, y));
                 break;
             } else {
                 break;
@@ -693,9 +693,9 @@ public class MoveGenerator {
     private void generateSouthMoves(int startX, int startY) {
         for (int y = startY - 1; y >= 1; y--) {
             if (board.getPiece(startX, y) == 0) {
-                legalMoves.add(new Move(board, startX, startY, startX, y));
+                legalMoves.add(new Move(game, startX, startY, startX, y));
             } else if (board.getPiece(startX, y) < 0 && whiteToPlay || board.getPiece(startX, y) > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, startX, y));
+                legalMoves.add(new Move(game, startX, startY, startX, y));
                 break;
             } else {
                 break;
@@ -706,9 +706,9 @@ public class MoveGenerator {
     private void generateWestMoves(int startX, int startY) {
         for (int x = startX - 1; x >= 1; x--) {
             if (board.getPiece(x, startY) == 0) {
-                legalMoves.add(new Move(board, startX, startY, x, startY));
+                legalMoves.add(new Move(game, startX, startY, x, startY));
             } else if (board.getPiece(x, startY) < 0 && whiteToPlay || board.getPiece(x, startY) > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, x, startY));
+                legalMoves.add(new Move(game, startX, startY, x, startY));
                 break;
             }  else {
                 break;
@@ -719,9 +719,9 @@ public class MoveGenerator {
     private void generateEastMoves(int startX, int startY) {
         for (int x = startX + 1; x <= 8; x++) {
             if (board.getPiece(x, startY) == 0) {
-                legalMoves.add(new Move(board, startX, startY, x, startY));
+                legalMoves.add(new Move(game, startX, startY, x, startY));
             } else if (board.getPiece(x, startY) < 0 && whiteToPlay || board.getPiece(x, startY) > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, x, startY));
+                legalMoves.add(new Move(game, startX, startY, x, startY));
                 break;
             }  else {
                 break;
@@ -738,9 +738,9 @@ public class MoveGenerator {
             }
 
             if (board.getPiece(x, y) == 0) {
-                legalMoves.add(new Move(board, startX, startY, x, y));
+                legalMoves.add(new Move(game, startX, startY, x, y));
             } else if (board.getPiece(x, y) < 0 && whiteToPlay || board.getPiece(x,y) > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, x, y));
+                legalMoves.add(new Move(game, startX, startY, x, y));
                 break;
             } else {
                 break;
@@ -759,9 +759,9 @@ public class MoveGenerator {
             }
 
             if (board.getPiece(x, y) == 0) {
-                legalMoves.add(new Move(board, startX, startY, x, y));
+                legalMoves.add(new Move(game, startX, startY, x, y));
             } else if (board.getPiece(x, y) < 0 && whiteToPlay || board.getPiece(x,y) > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, x, y));
+                legalMoves.add(new Move(game, startX, startY, x, y));
                 break;
             } else {
                 break;
@@ -780,9 +780,9 @@ public class MoveGenerator {
             }
 
             if (board.getPiece(x, y) == 0) {
-                legalMoves.add(new Move(board, startX, startY, x, y));
+                legalMoves.add(new Move(game, startX, startY, x, y));
             } else if (board.getPiece(x, y) < 0 && whiteToPlay || board.getPiece(x,y) > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, x, y));
+                legalMoves.add(new Move(game, startX, startY, x, y));
                 break;
             } else {
                 break;
@@ -801,9 +801,9 @@ public class MoveGenerator {
             }
 
             if (board.getPiece(x, y) == 0) {
-                legalMoves.add(new Move(board, startX, startY, x, y));
+                legalMoves.add(new Move(game, startX, startY, x, y));
             } else if (board.getPiece(x, y) < 0 && whiteToPlay || board.getPiece(x,y) > 0 && !whiteToPlay) {
-                legalMoves.add(new Move(board, startX, startY, x, y));
+                legalMoves.add(new Move(game, startX, startY, x, y));
                 break;
             } else {
                 break;

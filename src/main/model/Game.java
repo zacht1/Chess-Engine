@@ -4,9 +4,7 @@ import enumerations.CheckStatus;
 import enumerations.GameStatus;
 import model.generation.MoveGenerator;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import static enumerations.CheckStatus.*;
@@ -22,8 +20,6 @@ public class Game {
     private Player[] players;
     private Player currentTurn;
     private MoveGenerator moveGenerator;
-
-    private Map<Move, String> castlingRights;
 
     private boolean flippedBoard;
 
@@ -47,7 +43,6 @@ public class Game {
         blackPlayer.setHuman(false);
         players[1] = blackPlayer;
         this.currentTurn = players[0];
-        this.castlingRights = new HashMap<>();
         this.moveGenerator = new MoveGenerator();
         this.flippedBoard = false;
     }
@@ -68,8 +63,6 @@ public class Game {
         if (!legalMoves.contains(move)) {
             return false;
         }
-
-        updateCastlingRights(move);
 
         this.board.makeMove(move);
 
@@ -125,28 +118,6 @@ public class Game {
         }
     }
 
-    private void updateCastlingRights(Move move) {
-        String wk = "";
-        String wq = "";
-        String bk = "";
-        String bq = "";
-
-        if (whiteKingSideCastling) {
-            wk = "K";
-        }
-        if (whiteQueenSideCastling) {
-            wq = "Q";
-        }
-        if (blackKingSideCastling) {
-            bk = "k";
-        }
-        if (blackQueenSideCastling) {
-            bq = "q";
-        }
-
-        castlingRights.put(move, wk + wq + bk + bq);
-    }
-
     private void whiteCastlingRights(Move move) {
         if (move.getStartX() == 1 && move.getStartY() == 1) {
             whiteQueenSideCastling = false;
@@ -184,7 +155,7 @@ public class Game {
     public void undoMove(Move move) {
         this.board.unMakeMove(move);
 
-        String castleRights = castlingRights.get(move);
+        String castleRights = move.getCastlingRights();
 
         setWhiteKingSideCastling(false);
         setWhiteQueenSideCastling(false);
