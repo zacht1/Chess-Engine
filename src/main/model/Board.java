@@ -10,12 +10,6 @@ public class Board {
     private int[] board;
     private List<Move> moveList;
 
-    // is castling still legal
-    private boolean whiteQueenSideCastling = true;
-    private boolean whiteKingSideCastling = true;
-    private boolean blackQueenSideCastling = true;
-    private boolean blackKingSideCastling = true;
-
     /**
      * Construct a new chess board in the starting position
      */

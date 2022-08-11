@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class PerftTest {
     private MoveGenerator moveGenerator;
     private Game game;
@@ -25,6 +27,7 @@ public class PerftTest {
     public void perft() {
         game.setBoardFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
         //System.out.println(perft(2));
+        assertEquals(400, divide(2));
         System.out.println(divide(2));
     }
 
