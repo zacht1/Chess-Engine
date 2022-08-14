@@ -62,7 +62,7 @@ public class MoveGeneratorTest {
     }
 
     @Test
-    public void blockCheck() {
+    public void blockCheckTest() {
         testGame.setBoardFEN("r1bqk1nr/pppp1ppp/2n5/4p3/1b2P3/3P1N2/PPP2PPP/RNBQKB1R w KQkq - 1 4");
         List<Move> whiteMoveList = testMoveGenerator.generateLegalMoves(testGame, whitePlayer);
         assertEquals(7, whiteMoveList.size());
@@ -73,7 +73,7 @@ public class MoveGeneratorTest {
     }
 
     @Test
-    public void pins() {
+    public void pinsTest() {
         testGame.setBoardFEN("rnbqk1nr/pp3ppp/8/3p4/1bpP4/2N1PN2/PP3PPP/R1BQKB1R w KQkq - 1 7");
         List<Move> whiteMoveList = testMoveGenerator.generateLegalMoves(testGame, whitePlayer);
         assertEquals(18, testMoveGenerator.getPinnedPieces().get(0));
@@ -93,7 +93,7 @@ public class MoveGeneratorTest {
     }
 
     @Test
-    public void testCastling() {
+    public void castlingTest() {
         testGame.setBoardFEN("r3k1nr/8/5q2/2b5/8/8/8/R3K2R w KQkq - 0 1");
         List<Move> whiteMoveList = testMoveGenerator.generateLegalMoves(testGame, whitePlayer);
         assertEquals(23, whiteMoveList.size());
@@ -104,7 +104,7 @@ public class MoveGeneratorTest {
     }
 
     @Test
-    public void testPromotionMoves() {
+    public void promotionMovesTest() {
         testGame.setBoardFEN("4n3/P3PP2/8/3K4/5k2/8/2pp3p/3N4 w - - 0 1");
         List<Move> whiteMoveList = testMoveGenerator.generateLegalMoves(testGame, whitePlayer);
         assertEquals(21, whiteMoveList.size());
@@ -115,14 +115,14 @@ public class MoveGeneratorTest {
     }
 
     @Test
-    public void enPassantDiscoveredCheck() {
+    public void enPassantDiscoveredCheckTest() {
         testGame.setBoardFEN("8/8/8/8/k2Pp2Q/8/8/3K4 b - - 0 2");
         List<Move> blackMoveList = testMoveGenerator.generateLegalMoves(testGame, blackPlayer);
         assertEquals(6, blackMoveList.size());
     }
 
     @Test
-    public void otherPositions() {
+    public void otherPositionsTest() {
         testGame.setBoardFEN("r3k2r/p1pp1pb1/bn2Qnp1/2qPN3/1p2P3/2N5/PPPBBPPP/R3K2R b KQkq - 3 2");
         List<Move> moveList = testMoveGenerator.generateLegalMoves(testGame, testGame.getCurrentTurn());
         assertEquals(5, moveList.size());
