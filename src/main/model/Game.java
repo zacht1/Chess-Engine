@@ -278,4 +278,8 @@ public class Game {
     public boolean isFlippedBoard() {
         return flippedBoard;
     }
+
+    public MoveGenerator getMoveGenerator() {
+        return moveGenerator;
+    }
 }
