@@ -463,6 +463,28 @@ public class BoardFrame extends JPanel {
         }
 
         updatePromotionMovePieceMap(move, endPanel);
+
+        if (game.getGameStatus() == GameStatus.WHITE_CHECKMATE) {
+            new WhiteWinWindow(game);
+        } else if (game.getGameStatus() == GameStatus.BLACK_CHECKMATE) {
+            new BlackWinWindow(game);
+        }
+
+        SwingWorker swingWorker = new SwingWorker() {
+            @Override
+            protected Move doInBackground() {
+                sleep(500);
+                return playComputerMove();
+            }
+        };
+
+        if (!game.getCurrentTurn().isHuman()) {
+            swingWorker.execute();
+        }
+
+        this.revalidate();
+        this.repaint();
+        this.setVisible(true);
     }
 
     private void setPromotionMoveLabel(Move move, JLabel label) {
