@@ -21,6 +21,7 @@ public class Evaluation {
         this.game = game;
         this.board = game.getBoard();
         this.whiteToPlay = game.getCurrentTurn().isWhite();
+
         return countMaterial() + countMobility() + countPawnErrors();
     }
 

@@ -3,6 +3,7 @@ package model;
 import enumerations.CheckStatus;
 import enumerations.GameStatus;
 import model.generation.MoveGenerator;
+import model.search.Search;
 
 import java.util.List;
 import java.util.Random;
@@ -13,6 +14,7 @@ import static enumerations.GameStatus.*;
 public class Game {
     public static final int WHITE_PLAYER_INDEX = 0;
     public static final int BLACK_PLAYER_INDEX = 1;
+    public static final int SEARCH_DEPTH = 2;
 
     private Board board;
     private GameStatus gameStatus;
@@ -135,9 +137,9 @@ public class Game {
     }
 
     /**
-     * Play a computer generated move on the chess board
+     * Play a randomly generated move on the chess board
      */
-    public Move playComputerMove() {
+    public Move playRandomMove() {
         List<Move> moves = moveGenerator.generateLegalMoves(this, this.currentTurn);
 
         Random random = new Random();
@@ -146,6 +148,16 @@ public class Game {
 
         playMove(move);
 
+        return move;
+    }
+
+    /**
+     * Play a computer generated move on the chess board
+     */
+    public Move playComputerMove() {
+        Search search = new Search();
+        Move move = search.search(this, SEARCH_DEPTH);
+        playMove(move);
         return move;
     }
 

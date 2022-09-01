@@ -2,6 +2,7 @@ package gui.windows;
 
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import enumerations.GameStatus;
+import gui.GameWindow;
 import model.Game;
 
 import javax.swing.*;
@@ -91,7 +92,9 @@ public class WhiteWinWindow extends JFrame implements ActionListener {
         if (e.getSource() == closeButton) {
             this.dispose();
         } else if (e.getSource() == newGameButton) {
-            System.exit(0);
+            //System.exit(0);
+            Game newGame = new Game();
+            new GameWindow(newGame);
         }
     }
 }
