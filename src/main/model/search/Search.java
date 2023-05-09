@@ -31,7 +31,7 @@ public class Search {
 
             System.out.println(move.formatMove() + " : " + eval);
 
-            if (eval <= bestEvaluation) {
+            if (eval <= bestEvaluation) { // always black to play for know
                 bestEvaluation = eval;
                 bestMove = move;
             }

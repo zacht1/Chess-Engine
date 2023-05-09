@@ -298,7 +298,6 @@ public class Board {
         System.out.println(board[16] + "  " + board[17] + "  " + board[18] + "  " + board[19] + "  " + board[20] + "  " + board[21] + "  " + board[22] + "  " + board[23]);
         System.out.println(board[8] + "  " + board[8] + "  " + board[10] + "  " + board[11] + "  " + board[12] + "  " + board[13] + "  " + board[14] + "  " + board[15]);
         System.out.println(board[0] + "  " + board[1] + "  " + board[2] + "  " + board[3] + "  " + board[4] + "  " + board[5] + "  " + board[6] + "  " + board[7]);
-
     }
 
     /**

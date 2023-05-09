@@ -9,6 +9,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+// NOTE : Results of PERFT testing compared against results of stockfish chess engine
+
 public class PerftTest {
     private MoveGenerator moveGenerator;
     private Game game;
@@ -24,20 +26,46 @@ public class PerftTest {
     }
 
     @Test
-    public void perft() {
+    public void perftStartingPosTest() {
         game.setBoardFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-        //System.out.println(perft(2));
-        assertEquals(400, divide(2));
-        System.out.println(divide(2));
+        assertEquals(20, perft(1));
+        assertEquals(400, perft(2));
+        assertEquals(8902, perft(3));
+        assertEquals(197281, perft(4));
+        // assertEquals(4865609, perft(5));
+        // assertEquals(119060324, perft(6));
     }
 
-    private int perft(int depth) {
-        if (depth == 0) {
-            return 1;
-        }
+    @Test
+    public void perftKiwipetePosTest() {
+        game.setBoardFEN("r3k2r/p1ppqpb1/bn2pnp1/3PN3/1p2P3/2N2Q1p/PPPBBPPP/R3K2R w KQkq - ");
+        assertEquals(48, perft(1));
+        assertEquals(2039, perft(2));
+        assertEquals(97862, perft(3));
+    }
 
+    @Test
+    public void perftEndgamePosTest() {
+        game.setBoardFEN("8/2p5/3p4/KP5r/1R3p1k/8/4P1P1/8 w - -");
+        assertEquals(14, perft(1));
+        assertEquals(191, perft(2));
+        assertEquals(2812, perft(3));
+        assertEquals(43238, perft(4));
+    }
+
+    /**
+     * Returns the number of leaf nodes in a move generation tree of legal moves with given depth. The returned number
+     * can then be compared to pre-determined values.
+     *
+     * REQUIRE : depth >= 1
+     */
+    private int perft(int depth) {
         List<Move> moveList = moveGenerator.generateLegalMoves(game, game.getCurrentTurn());
         int numPositions = 0;
+
+        if (depth == 0) {
+            return moveList.size();
+        }
 
         for (Move move: moveList) {
             game.playMove(move);
@@ -48,6 +76,10 @@ public class PerftTest {
         return numPositions;
     }
 
+    /**
+     * Variation of PERFT algorithm, which also returns number of leaf nodes in move generation tree with given depth.
+     * Additionally, prints to console all moves and the number of leaf nodes in that moves sub-tree.
+     */
     private long divide(int depth) {
         List<Move> moveList;
         int nMoves, i;
